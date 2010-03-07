@@ -7,5 +7,4 @@
 ## Dependencies:
 ## SavedVariables:
 core.lua
-helper.lua
 frame.xml

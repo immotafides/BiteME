@@ -1,17 +1,17 @@
 ﻿--  HELPER  ZEUGS
-function BiteMELEE:whisper(msg, name)
+function BiteME:whisper(msg, name)
    if not (msg and name) then return end   
    SendChatMessage(Prefix..msg, "WHISPER", nil, name)
 end
 
-function BiteMELEE:channel(msg)
+function BiteME:channel(msg)
 	if msg then		
 		SendChatMessage(msg, "OFFICER", nil)
 	end	
 end
 
 local print,format = print,string.format
-function BiteMELEE:message(msg)
+function BiteME:message(msg)
 	if msg then		
 		print(format("|cffff0033"..Prefix.."|r%s",msg))
 	end
