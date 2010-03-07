@@ -1,0 +1,10 @@
+## Interface: 30300
+## Author: Sephina @Forscherliga EU
+## Title: |cffff0033Immota|rFrames
+## Notes: GUI for ImmotaAddons
+## Version : 1.0
+## OptionalDeps:
+## Dependencies:
+## SavedVariables:
+core.lua
+frame.xml

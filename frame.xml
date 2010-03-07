@@ -1,0 +1,317 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+	<!-- Skripte -->
+	<Frame name="ImmotaFrames_GeneralScripts" hidden="true">
+  		<Scripts>
+			<OnLoad> ImmotaFrames_OnLoad(); </OnLoad>
+		</Scripts>
+	</Frame>
+	<!-- generelles Template -->
+	<Frame name="ImmotaFramesElements" hidden="true" virtual="true" parent="UIParent">
+		<!-- set the size of the frame -->
+		<Size>
+			<AbsDimension x="400" y="300"/>
+		</Size>
+		<!-- Fixpunkt auf dem Bildschirm -->
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<!-- Hintergund und Schriftzug -->
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Background" setAllPoints="true">
+					<!-- Hintergrundfrabe -->
+					<Color r="0" g="0" b="0" a="0.8" />
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK"> 
+				<FontString name="$parent_Text" inherits="GameFontNormal" text="Immota Fides">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="4" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	<!-- BiteMELEE Addon: ImmotaFrames1 -->
+	<Frame name="ImmotaFrames1" inherits="ImmotaFramesElements">
+		<!-- Frames innerhalb von BiteMELEE -->
+		<Frames>
+		<!-- Button: Close Frame  -->
+			<Button name="$parent_Button3" inherits="UIPanelCloseButton">
+				<Anchors> 
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="4" y="4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<!-- Eingabefelder: Linke Seite -->
+			<!-- L1 -->
+			<EditBox name="$parent_InputBox1" inherits="InputBoxTemplate" id="11">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- L2 -->
+			<EditBox name="$parent_InputBox2" inherits="InputBoxTemplate" id="12">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-80"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- L3 -->
+			<EditBox name="$parent_InputBox3" inherits="InputBoxTemplate" id="13">
+				<Size>
+					<AbsDimension x="100" y="26"/> 
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- L4 -->
+			<EditBox name="$parent_InputBox4" inherits="InputBoxTemplate" id="14">
+				<Size>
+					<AbsDimension x="100" y="26"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-120"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- L5 -->
+			<EditBox name="$parent_InputBox5" inherits="InputBoxTemplate" id="15">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-140"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+<!-- Eingabefelder: Rechte Seite --> 
+			<!-- R1 -->
+			<EditBox name="$parent_InputBox6" inherits="InputBoxTemplate" id="21">
+				<Size>
+					<AbsDimension x="100" y="26"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-60"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- R2 -->
+			<EditBox name="$parent_InputBox7" inherits="InputBoxTemplate" id="22">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-80"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- R3 -->
+			<EditBox name="$parent_InputBox8" inherits="InputBoxTemplate" id="23">
+				<Size>
+					<AbsDimension x="100" y="26"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-100"/>
+					</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- R4 -->
+			<EditBox name="$parent_InputBox9" inherits="InputBoxTemplate" id="24">
+				<Size> 
+					<AbsDimension x="100" y="26"/>
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-120"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- R5 -->
+			<EditBox name="$parent_InputBox10" inherits="InputBoxTemplate" id="25">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-140"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+<!-- Eingabefelder: Range Verteiler --> 
+			<!-- Links -->
+			<EditBox name="$parent_InputBox11" inherits="InputBoxTemplate" id="16">
+				<Size> 
+					<AbsDimension x="100" y="26"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-200"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+			<!-- Rechts -->
+			<EditBox name="$parent_InputBox12" inherits="InputBoxTemplate" id="26">
+				<Size>
+					<AbsDimension x="100" y="26"/>
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-200"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+<!-- Button: Save Data, speichert die Daten in die Tabellen -->
+			<Button name="$parent_ButtonValidate" inherits="UIPanelButtonTemplate" text="Save Data" id="1">
+				<Size> 
+					<AbsDimension x="100" y="24"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-260"/>
+						</Offset>
+					</Anchor>
+				</Anchors> 
+				<Scripts>
+					<OnClick>ImmotaFrames_SendData(arg1)</OnClick>
+				</Scripts>
+			</Button>
+			<!-- Button: Save Data -->
+			<Button name="$parent_ButtonSendSetup" inherits="UIPanelButtonTemplate" text="Send Setup" id="2">
+				<Size> 
+					<AbsDimension x="100" y="24"/> 
+				</Size> 
+				<Anchors> 
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="140" y="-260"/>
+						</Offset>
+					</Anchor>
+				</Anchors> 
+				<Scripts>
+					<OnClick>ImmotaFrames_OnClick(arg1)</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers> 
+			<!-- Schrift im Frame -->
+			<Layer level="ARTWORK">
+				<!-- Text: Close -->
+				<FontString name="$parent_Text1" inherits="GameFontNormalSmall" text="Close">
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="-23" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0.5" b="0"/>
+				</FontString>
+				<!-- Text: Melees Links -->
+				<FontString name="$parent_Text2" inherits="GameFontNormalSmall" text="Melees Links">
+					<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-35"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0.5" b="0"/>
+				</FontString>
+				<!-- Text: Melees Rechts -->
+				<FontString name="$parent_Text3" inherits="GameFontNormalSmall" text="Melees Rechts">
+					<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-155" y="-35"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0.5" b="0"/>
+				</FontString>
+				<!-- Text: Rangeverteiler Links -->
+				<FontString name="$parent_Text4" inherits="GameFontNormalSmall" text="Rangeverteiler Links">
+					<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-180"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0.5" b="0"/>
+				</FontString>
+				<!-- Text: Rangeverteiler Rechts -->
+				<FontString name="$parent_Text5" inherits="GameFontNormalSmall" text="Rangeverteiler Rechts">
+					<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-120" y="-180"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0.5" b="0"/>
+				</FontString>
+				<!-- Name des Addons: BiteMELEE -->
+				<FontString name="$parent_Text" inherits="GameFontNormal" text="| BiteMELEE">
+					<Anchors>
+					<Anchor point="LEFT" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="90" y="-10"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+					<Color r="0.8" g="0" b="0"/>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+</Ui>
