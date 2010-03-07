@@ -1,7 +1,7 @@
 ﻿## Interface: 30300
-## Author: Sephina @Forscherliga EU
-## Title: |cffff0033Immota|rFrames
-## Notes: GUI for ImmotaAddons
+## Author: Sephina und Knopf @Forscherliga EU
+## Title: |cffff0033Immota|r BiteMe
+## Notes: ImmotaAddons | BiteMe
 ## Version : 1.0
 ## OptionalDeps:
 ## Dependencies:
