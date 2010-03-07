@@ -102,7 +102,7 @@ end
 
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
 function BiteME:OnClick(...)
-	self:channel("Aufstellung Mes Blood Queen")
+	self:channel("Aufstellung Melees Blood Queen")
 	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Left"][1],BiteMe["Left"][2],BiteMe["Left"][3],BiteMe["Left"][4],BiteMe["Left"][5]))
 	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Right"][1],BiteMe["Right"][2],BiteMe["Right"][3],BiteMe["Right"][4],BiteMe["Right"][5]))
 	self:channel(format("Verteiler bei den Mes ist %s",BiteMe["Left"][1]))
@@ -112,43 +112,43 @@ end
 -- Funktion für den Button SendData. Setter Funktionen für die BiteMe Tabelle
 function BiteMe:SendData(...)
 	-- Linke Seite  
-   	if ImmotaFrames1_InputBox1:GetText() then    		
-		BiteMe["Left"][1] = ImmotaFrames1_InputBox1:GetText()
+   	if BiteMe_InputBox1:GetText() then    		
+		BiteMe["Left"][1] = BiteMe_InputBox1:GetText()
 	end
-	if ImmotaFrames1_InputBox2:GetText() then
-		BiteMe["Left"][2] = ImmotaFrames1_InputBox2:GetText()
+	if BiteMe_InputBox2:GetText() then
+		BiteMe["Left"][2] = BiteMe_InputBox2:GetText()
 	end
-	if ImmotaFrames1_InputBox3:GetText() then
-		BiteMe["Left"][3] = ImmotaFrames1_InputBox3:GetText()
+	if BiteMe_InputBox3:GetText() then
+		BiteMe["Left"][3] = BiteMe_InputBox3:GetText()
 	end
-	if ImmotaFrames1_InputBox4:GetText() then
-		BiteMe["Left"][4] = ImmotaFrames1_InputBox4:GetText()		
+	if BiteMe_InputBox4:GetText() then
+		BiteMe["Left"][4] = BiteMe_InputBox4:GetText()		
 	end
-	if ImmotaFrames1_InputBox5:GetText() then
-		BiteMe["Left"][5] = ImmotaFrames1_InputBox5:GetText()
+	if BiteMe_InputBox5:GetText() then
+		BiteMe["Left"][5] = BiteMe_InputBox5:GetText()
    	end
 	-- Rechte Seite  
-   	if ImmotaFrames1_InputBox6:GetText() then
-    	BiteMe["Right"][1] = ImmotaFrames1_InputBox6:GetText()
+   	if BiteMe_InputBox6:GetText() then
+    	BiteMe["Right"][1] = BiteMe_InputBox6:GetText()
 	end
-   	if ImmotaFrames1_InputBox7:GetText() then
-		BiteMe["Right"][2] = ImmotaFrames1_InputBox7:GetText()
+   	if BiteMe_InputBox7:GetText() then
+		BiteMe["Right"][2] = BiteMe_InputBox7:GetText()
 	end
-	if ImmotaFrames1_InputBox8:GetText() then
-		BiteMe["Right"][3] = ImmotaFrames1_InputBox8:GetText()
+	if BiteMe_InputBox8:GetText() then
+		BiteMe["Right"][3] = BiteMe_InputBox8:GetText()
 	end
-	if ImmotaFrames1_InputBox9:GetText() then
-		BiteMe["Right"][4] = ImmotaFrames1_InputBox9:GetText()		
+	if BiteMe_InputBox9:GetText() then
+		BiteMe["Right"][4] = BiteMe_InputBox9:GetText()		
 	end
-	if ImmotaFrames1_InputBox10:GetText() then
-		BiteMe["Right"][5] = ImmotaFrames1_InputBox10:GetText()
+	if BiteMe_InputBox10:GetText() then
+		BiteMe["Right"][5] = BiteMe_InputBox10:GetText()
 	end
 	-- Ranged
-	if ImmotaFrames1_InputBox11:GetText() then
-		RangedPlayer1 = ImmotaFrames1_InputBox11:GetText()
+	if BiteMe_InputBox11:GetText() then
+		RangedPlayer1 = BiteMe_InputBox11:GetText()
 	end
-	if ImmotaFrames1_InputBox12:GetText() then
-		RangedPlayer2 = ImmotaFrames1_InputBox12:GetText()
+	if BiteMe_InputBox12:GetText() then
+		RangedPlayer2 = BiteMe_InputBox12:GetText()
 	end
 end
 
