@@ -1,317 +1,311 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
-	<!-- Skripte -->
-	<Frame name="ImmotaFrames_GeneralScripts" hidden="true">
-  		<Scripts>
-			<OnLoad> ImmotaFrames_OnLoad(); </OnLoad>
-		</Scripts>
-	</Frame>
+﻿<ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 	<!-- generelles Template -->
-	<Frame name="ImmotaFramesElements" hidden="true" virtual="true" parent="UIParent">
+	<frame name="ImmotaFramesElements" hidden="true" virtual="true" parent="UIParent">
 		<!-- set the size of the frame -->
-		<Size>
-			<AbsDimension x="400" y="300"/>
-		</Size>
+		<size>
+			<absdimension x="400" y="300"/>
+		</size>
 		<!-- Fixpunkt auf dem Bildschirm -->
-		<Anchors>
-			<Anchor point="CENTER" />
-		</Anchors>
+		<anchors>
+			<anchor point="CENTER" />
+		</anchors>
 		<!-- Hintergund und Schriftzug -->
-		<Layers>
-			<Layer level="BACKGROUND">
-				<Texture name="$parent_Background" setAllPoints="true">
+		<layer>
+			<layer level="BACKGROUND">
+				<texture name="$parent_Background" setallpoints="true">
 					<!-- Hintergrundfrabe -->
-					<Color r="0" g="0" b="0" a="0.8" />
-				</Texture>
-			</Layer>
-			<Layer level="ARTWORK"> 
-				<FontString name="$parent_Text" inherits="GameFontNormal" text="Immota Fides">
-					<Anchors>
-						<Anchor point="LEFT" relativePoint="TOPLEFT">
-							<Offset>
-								<AbsDimension x="4" y="-10"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
-			</Layer>
-		</Layers>
-	</Frame>
-	<!-- BiteMELEE Addon: ImmotaFrames1 -->
-	<Frame name="ImmotaFrames1" inherits="ImmotaFramesElements">
-		<!-- Frames innerhalb von BiteMELEE -->
+					<color r="0" g="0" b="0" a="0.8" />
+				</texture>
+			</layer>
+			<layer level="ARTWORK"> 
+				<fontstring name="$parent_Text" inherits="GameFontNormal" text="Immota Fides">
+					<anchors>
+						<anchor point="LEFT" relativepoint="TOPLEFT">
+							<offset>
+								<absdimension x="4" y="-10"/>
+							</offset>
+						</anchor>
+					</anchors>
+				</fontstring>
+			</layer>
+		</layer>
+	</frame>
+	<!-- BiteME Addon: BiteMe -->
+	<frame name="BiteMe" inherits="ImmotaFramesElements">
+		<!-- frames innerhalb von BiteME -->
 		<Frames>
-		<!-- Button: Close Frame  -->
-			<Button name="$parent_Button3" inherits="UIPanelCloseButton">
-				<Anchors> 
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="4" y="4"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</Button>
+			<!-- Button: Close frame  -->
+			<button name="$parent_Button3" inherits="UIPanelCloseButton">
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="4" y="4"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</button>
 			<!-- Eingabefelder: Linke Seite -->
 			<!-- L1 -->
-			<EditBox name="$parent_InputBox1" inherits="InputBoxTemplate" id="11">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-60"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox1" inherits="InputBoxTemplate" id="11">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size>
+				<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-60"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- L2 -->
-			<EditBox name="$parent_InputBox2" inherits="InputBoxTemplate" id="12">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-80"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox2" inherits="InputBoxTemplate" id="12">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-80"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- L3 -->
-			<EditBox name="$parent_InputBox3" inherits="InputBoxTemplate" id="13">
-				<Size>
-					<AbsDimension x="100" y="26"/> 
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-100"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox3" inherits="InputBoxTemplate" id="13">
+				<size>
+					<absdimension x="100" y="26"/> 
+				</size>
+				<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-100"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- L4 -->
-			<EditBox name="$parent_InputBox4" inherits="InputBoxTemplate" id="14">
-				<Size>
-					<AbsDimension x="100" y="26"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-120"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox4" inherits="InputBoxTemplate" id="14">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size>
+				<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-120"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- L5 -->
-			<EditBox name="$parent_InputBox5" inherits="InputBoxTemplate" id="15">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-140"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox5" inherits="InputBoxTemplate" id="15">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size>
+				<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-140"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 <!-- Eingabefelder: Rechte Seite --> 
 			<!-- R1 -->
-			<EditBox name="$parent_InputBox6" inherits="InputBoxTemplate" id="21">
-				<Size>
-					<AbsDimension x="100" y="26"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-60"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox6" inherits="InputBoxTemplate" id="21">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size>
+				<anchors>
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-60"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- R2 -->
-			<EditBox name="$parent_InputBox7" inherits="InputBoxTemplate" id="22">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-80"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox7" inherits="InputBoxTemplate" id="22">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-80"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- R3 -->
-			<EditBox name="$parent_InputBox8" inherits="InputBoxTemplate" id="23">
-				<Size>
-					<AbsDimension x="100" y="26"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-100"/>
-					</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox8" inherits="InputBoxTemplate" id="23">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size>
+				<anchors>
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-100"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- R4 -->
-			<EditBox name="$parent_InputBox9" inherits="InputBoxTemplate" id="24">
-				<Size> 
-					<AbsDimension x="100" y="26"/>
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-120"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox9" inherits="InputBoxTemplate" id="24">
+				<size> 
+					<absdimension x="100" y="26"/>
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-120"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- R5 -->
-			<EditBox name="$parent_InputBox10" inherits="InputBoxTemplate" id="25">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-140"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox10" inherits="InputBoxTemplate" id="25">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-140"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 <!-- Eingabefelder: Range Verteiler --> 
 			<!-- Links -->
-			<EditBox name="$parent_InputBox11" inherits="InputBoxTemplate" id="16">
-				<Size> 
-					<AbsDimension x="100" y="26"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-200"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox11" inherits="InputBoxTemplate" id="16">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-200"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 			<!-- Rechts -->
-			<EditBox name="$parent_InputBox12" inherits="InputBoxTemplate" id="26">
-				<Size>
-					<AbsDimension x="100" y="26"/>
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-200"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</EditBox>
+			<editbox name="$parent_InputBox12" inherits="InputBoxTemplate" id="26">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-200"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
 <!-- Button: Save Data, speichert die Daten in die Tabellen -->
-			<Button name="$parent_ButtonValidate" inherits="UIPanelButtonTemplate" text="Save Data" id="1">
-				<Size> 
-					<AbsDimension x="100" y="24"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-260"/>
-						</Offset>
-					</Anchor>
-				</Anchors> 
-				<Scripts>
-					<OnClick>ImmotaFrames_SendData(arg1)</OnClick>
-				</Scripts>
-			</Button>
+			<button name="$parent_ButtonValidate" inherits="UIPanelButtonTemplate" text="Save Data" id="1">
+				<size> 
+					<absdimension x="100" y="24"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-260"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteMe:SendData(arg1)</onclick>
+				</scripts>
+			</button>
 			<!-- Button: Save Data -->
-			<Button name="$parent_ButtonSendSetup" inherits="UIPanelButtonTemplate" text="Send Setup" id="2">
-				<Size> 
-					<AbsDimension x="100" y="24"/> 
-				</Size> 
-				<Anchors> 
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="140" y="-260"/>
-						</Offset>
-					</Anchor>
-				</Anchors> 
-				<Scripts>
-					<OnClick>ImmotaFrames_OnClick(arg1)</OnClick>
-				</Scripts>
-			</Button>
-		</Frames>
-		<Layers> 
-			<!-- Schrift im Frame -->
-			<Layer level="ARTWORK">
+			<button name="$parent_ButtonSendSetup" inherits="UIPanelButtonTemplate" text="Send Setup" id="2">
+				<size> 
+					<absdimension x="100" y="24"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="140" y="-260"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:OnClick(arg1)</onclick>
+				</scripts>
+			</button>
+		</frames>
+		<layer> 
+			<!-- Schrift im frame -->
+			<layer level="ARTWORK">
 				<!-- Text: Close -->
-				<FontString name="$parent_Text1" inherits="GameFontNormalSmall" text="Close">
-					<Anchors>
-						<Anchor point="TOPRIGHT">
-							<Offset>
-								<AbsDimension x="-23" y="-2"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0.5" b="0"/>
-				</FontString>
+				<fontstring name="$parent_Text1" inherits="GameFontNormalSmall" text="Close">
+					<anchors>
+						<anchor point="TOPRIGHT">
+							<offset>
+								<absdimension x="-23" y="-2"/>
+							</offset>
+						</anchor>
+					</anchors>
+					<color r="0.8" g="0.5" b="0"/>
+				</fontstring>
 				<!-- Text: Melees Links -->
-				<FontString name="$parent_Text2" inherits="GameFontNormalSmall" text="Melees Links">
-					<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-35"/>
-						</Offset>
-					</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0.5" b="0"/>
-				</FontString>
+				<fontstring name="$parent_Text2" inherits="GameFontNormalSmall" text="Melees Links">
+					<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-35"/>
+						</offset>
+					</anchor>
+					</anchors>
+					<color r="0.8" g="0.5" b="0"/>
+				</fontstring>
 				<!-- Text: Melees Rechts -->
-				<FontString name="$parent_Text3" inherits="GameFontNormalSmall" text="Melees Rechts">
-					<Anchors>
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-155" y="-35"/>
-						</Offset>
-					</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0.5" b="0"/>
-				</FontString>
+				<fontstring name="$parent_Text3" inherits="GameFontNormalSmall" text="Melees Rechts">
+					<anchors>
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-155" y="-35"/>
+						</offset>
+					</anchor>
+					</anchors>
+					<color r="0.8" g="0.5" b="0"/>
+				</fontstring>
 				<!-- Text: Rangeverteiler Links -->
-				<FontString name="$parent_Text4" inherits="GameFontNormalSmall" text="Rangeverteiler Links">
-					<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="20" y="-180"/>
-						</Offset>
-					</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0.5" b="0"/>
-				</FontString>
+				<fontstring name="$parent_Text4" inherits="GameFontNormalSmall" text="Rangeverteiler Links">
+					<anchors>
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="20" y="-180"/>
+						</offset>
+					</anchor>
+					</anchors>
+					<color r="0.8" g="0.5" b="0"/>
+				</fontstring>
 				<!-- Text: Rangeverteiler Rechts -->
-				<FontString name="$parent_Text5" inherits="GameFontNormalSmall" text="Rangeverteiler Rechts">
-					<Anchors>
-					<Anchor point="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="-120" y="-180"/>
-						</Offset>
-					</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0.5" b="0"/>
-				</FontString>
+				<fontstring name="$parent_Text5" inherits="GameFontNormalSmall" text="Rangeverteiler Rechts">
+					<anchors>
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-120" y="-180"/>
+						</offset>
+					</anchor>
+					</anchors>
+					<color r="0.8" g="0.5" b="0"/>
+				</fontstring>
 				<!-- Name des Addons: BiteMELEE -->
-				<FontString name="$parent_Text" inherits="GameFontNormal" text="| BiteMELEE">
-					<Anchors>
-					<Anchor point="LEFT" relativePoint="TOPLEFT">
-						<Offset>
-							<AbsDimension x="90" y="-10"/>
-						</Offset>
-					</Anchor>
-					</Anchors>
-					<Color r="0.8" g="0" b="0"/>
-				</FontString>
-			</Layer>
-		</Layers>
-	</Frame>
-</Ui>
+				<fontstring name="$parent_Text" inherits="GameFontNormal" text="| BiteME">
+					<anchors>
+					<anchor point="LEFT" relativepoint="TOPLEFT">
+						<offset>
+							<absdimension x="90" y="-10"/>
+						</offset>
+					</anchor>
+					</anchors>
+					<color r="0.8" g="0" b="0"/>
+				</fontstring>
+			</layer>
+		</layer>
+	</frame>
+</ii>
