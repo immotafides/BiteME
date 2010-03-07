@@ -33,7 +33,7 @@
 	<!-- BiteME Addon: BiteMe -->
 	<frame name="BiteMe" inherits="ImmotaFramesElements">
 		<!-- frames innerhalb von BiteME -->
-		<Frames>
+		<frames>
 			<!-- Button: Close frame  -->
 			<button name="$parent_Button3" inherits="UIPanelCloseButton">
 				<anchors> 
@@ -308,4 +308,4 @@
 			</layer>
 		</layer>
 	</frame>
-</ii>
+</ui>
