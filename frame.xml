@@ -10,7 +10,7 @@
 			<anchor point="CENTER" />
 		</anchors>
 		<!-- Hintergund und Schriftzug -->
-		<layer>
+		<layers>
 			<layer level="BACKGROUND">
 				<texture name="$parent_Background" setallpoints="true">
 					<!-- Hintergrundfrabe -->
@@ -28,7 +28,7 @@
 					</anchors>
 				</fontstring>
 			</layer>
-		</layer>
+		</layers>
 	</frame>
 	<!-- BiteME Addon: BiteMe -->
 	<frame name="BiteMe" inherits="ImmotaFramesElements">
@@ -236,7 +236,7 @@
 				</scripts>
 			</button>
 		</frames>
-		<layer> 
+		<layers> 
 			<!-- Schrift im frame -->
 			<layer level="ARTWORK">
 				<!-- Text: Close -->
@@ -306,6 +306,6 @@
 					<color r="0.8" g="0" b="0"/>
 				</fontstring>
 			</layer>
-		</layer>
+		</layers>
 	</frame>
 </ui>
