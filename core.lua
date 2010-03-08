@@ -100,6 +100,14 @@ function BiteME:BiteOrder()
 		
 end
 
+-- Funktion für den Button GetTarget
+function BiteME:GetTarget(...)
+	if UnitName("target") then
+	self:channel("Target: "..UnitName("target"))
+	BiteMe_InputBox1:Insert(UnitName("target"))
+	end
+end
+
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
 function BiteME:OnClick(...)
 	self:channel("Aufstellung Melees Blood Queen")
