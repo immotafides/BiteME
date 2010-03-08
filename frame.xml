@@ -1,6 +1,6 @@
 ﻿<ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
-	<!-- generelles Template -->
-	<frame name="ImmotaFramesElements" hidden="true" virtual="true" parent="UIParent">
+	<!-- BiteME Addon: BiteMe -->
+	<frame name="BiteMe" hidden="true" movable="true" enableMouse="true" parent="UIParent">
 		<!-- set the size of the frame -->
 		<size>
 			<absdimension x="650" y="350"/>
@@ -9,29 +9,6 @@
 		<anchors>
 			<anchor point="CENTER" />
 		</anchors>
-		<!-- Hintergund und Schriftzug -->
-		<layers>
-			<layer level="BACKGROUND">
-				<texture name="$parent_Background" setallpoints="true">
-					<!-- Hintergrundfrabe -->
-					<color r="0" g="0" b="0" a="0.8" />
-				</texture>
-			</layer>
-			<layer level="ARTWORK"> 
-				<fontstring name="$parent_Text" inherits="GameFontNormal" text="Immota Fides">
-					<anchors>
-						<anchor point="LEFT" relativepoint="TOPLEFT">
-							<offset>
-								<absdimension x="4" y="-10"/>
-							</offset>
-						</anchor>
-					</anchors>
-				</fontstring>
-			</layer>
-		</layers>
-	</frame>
-	<!-- BiteME Addon: BiteMe -->
-	<frame name="BiteMe" inherits="ImmotaFramesElements">
 		<!-- frames innerhalb von BiteME -->
 		<frames>
 			<!-- Button: Close frame  -->
@@ -361,7 +338,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+					<onclick>BiteME:GetTarget4L1(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4L2 -->
@@ -641,8 +618,24 @@
 			</button>			
 		</frames>
 		<layers> 
-			<!-- Schrift im frame -->
+			<!-- Hintergrund-->
+			<layer level="BACKGROUND">
+				<texture name="$parent_Background" setallpoints="true">
+					<color r="0" g="0" b="0" a="0.8" />
+				</texture>
+			</layer>
+			<!-- Texturen auf dem Hintergrund -->
 			<layer level="ARTWORK">
+				<!-- Text: Immota Fides -->
+				<fontstring name="$parent_Text" inherits="GameFontNormal" text="Immota Fides">
+					<anchors>
+						<anchor point="LEFT" relativepoint="TOPLEFT">
+							<offset>
+								<absdimension x="4" y="-10"/>
+							</offset>
+						</anchor>
+					</anchors>
+				</fontstring>
 				<!-- Text: Close -->
 				<fontstring name="$parent_Text1" inherits="GameFontNormalSmall" text="Close">
 					<anchors>
@@ -710,6 +703,12 @@
 					<color r="0.8" g="0" b="0"/>
 				</fontstring>
 			</layer>
-		</layers>
+		</layers> 
+		<!-- Skript zum bewegen des Frames -->
+		<Scripts>
+            <OnMouseDown> this:StartMoving();  </OnMouseDown>
+            <OnMouseUp>  this:StopMovingOrSizing(); </OnMouseUp>
+            <OnDragStop> this:StopMovingOrSizing(); </OnDragStop>
+        </Scripts> 
 	</frame>
 </ui>

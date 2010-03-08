@@ -115,8 +115,8 @@ function BiteME:BiteOrder()
 		
 end
 
--- Funktion für den Button GetTarget
-function BiteME:GetTarget(...)
+-- Funktion für den Button GetTarget4L1
+function BiteME:GetTarget4L1(...)
 	if UnitName("target") then
 	self:channel("Target: "..UnitName("target"))
 	BiteMe_InputBox1:Insert(UnitName("target"))
