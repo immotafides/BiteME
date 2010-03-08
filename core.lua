@@ -138,7 +138,7 @@ function BiteME:GetTarget4L1(...)
 	end
 end
 
-<<<<<<< HEAD
+
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
 function BiteME:OnClick()
 	self:channel("Aufstellung Melees Blood Queen")
@@ -224,29 +224,29 @@ function BiteME:SendData()
 	end
 	-- Ranged Linke Seite
 	if BiteMe_InputBox11:GetText() then
-		BiteMe["RLeft"][1] = BiteMe_InputBox11:GetText()
+		BiteMe["Ranged"]["Left"][1] = BiteMe_InputBox11:GetText()
 	end
 	if BiteMe_InputBox12:GetText() then
-		BiteMe["RLeft"][2] = BiteMe_InputBox12:GetText()
+		BiteMe["Ranged"]["Left"][2] = BiteMe_InputBox12:GetText()
 	end
 	if BiteMe_InputBox13:GetText() then
-		BiteMe["RLeft"][3] = BiteMe_InputBox13:GetText()
+		BiteMe["Ranged"]["Left"][3] = BiteMe_InputBox13:GetText()
 	end
 	if BiteMe_InputBox14:GetText() then
-		BiteMe["RLeft"][4] = BiteMe_InputBox14:GetText()
+		BiteMe["Ranged"]["Left"][4] = BiteMe_InputBox14:GetText()
 	end
 	-- Ranged Rechte Seite
 	if BiteMe_InputBox15:GetText() then
-		BiteMe["RRight"][1] = BiteMe_InputBox15:GetText()
+		BiteMe["Ranged"]["Right"][1] = BiteMe_InputBox15:GetText()
 	end
 	if BiteMe_InputBox16:GetText() then
-		BiteMe["RRight"][2] = BiteMe_InputBox16:GetText()
+		BiteMe["Ranged"]["Right"][2] = BiteMe_InputBox16:GetText()
 	end
 	if BiteMe_InputBox17:GetText() then
-		BiteMe["RRight"][3] = BiteMe_InputBox17:GetText()
+		BiteMe["Ranged"]["Right"][3] = BiteMe_InputBox17:GetText()
 	end
 	if BiteMe_InputBox18:GetText() then
-		BiteMe["RRight"][4] = BiteMe_InputBox18:GetText()
+		BiteMe["Ranged"]["Right"][4] = BiteMe_InputBox18:GetText()
 	end
 end
 
