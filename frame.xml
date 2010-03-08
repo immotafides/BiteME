@@ -3,7 +3,7 @@
 	<frame name="ImmotaFramesElements" hidden="true" virtual="true" parent="UIParent">
 		<!-- set the size of the frame -->
 		<size>
-			<absdimension x="400" y="300"/>
+			<absdimension x="650" y="350"/>
 		</size>
 		<!-- Fixpunkt auf dem Bildschirm -->
 		<anchors>
@@ -44,174 +44,253 @@
 					</anchor>
 				</anchors>
 			</button>
-			<!-- Eingabefelder: Linke Seite -->
+			<!-- Eingabefelder: Melee Linke Seite -->
 			<!-- L1 -->
-			<editbox name="$parent_InputBox1" inherits="InputBoxTemplate" id="11">
+			<editbox name="$parent_InputBox1" inherits="InputBoxTemplate" id="110">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size>
 				<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-60"/>
+							<absdimension x="150" y="-60"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- L2 -->
-			<editbox name="$parent_InputBox2" inherits="InputBoxTemplate" id="12">
+			<editbox name="$parent_InputBox2" inherits="InputBoxTemplate" id="120">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-80"/>
+							<absdimension x="150" y="-80"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- L3 -->
-			<editbox name="$parent_InputBox3" inherits="InputBoxTemplate" id="13">
+			<editbox name="$parent_InputBox3" inherits="InputBoxTemplate" id="130">
 				<size>
 					<absdimension x="100" y="26"/> 
 				</size>
 				<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-100"/>
+							<absdimension x="150" y="-100"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- L4 -->
-			<editbox name="$parent_InputBox4" inherits="InputBoxTemplate" id="14">
+			<editbox name="$parent_InputBox4" inherits="InputBoxTemplate" id="140">
 				<size>
 					<absdimension x="100" y="26"/>
 				</size>
 				<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-120"/>
+							<absdimension x="150" y="-120"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- L5 -->
-			<editbox name="$parent_InputBox5" inherits="InputBoxTemplate" id="15">
+			<editbox name="$parent_InputBox5" inherits="InputBoxTemplate" id="150">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size>
 				<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-140"/>
+							<absdimension x="150" y="-140"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
-<!-- Eingabefelder: Rechte Seite --> 
+			<!-- Eingabefelder: Melee Rechte Seite --> 
 			<!-- R1 -->
-			<editbox name="$parent_InputBox6" inherits="InputBoxTemplate" id="21">
+			<editbox name="$parent_InputBox6" inherits="InputBoxTemplate" id="210">
 				<size>
 					<absdimension x="100" y="26"/>
 				</size>
 				<anchors>
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-60"/>
+							<absdimension x="-150" y="-60"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- R2 -->
-			<editbox name="$parent_InputBox7" inherits="InputBoxTemplate" id="22">
+			<editbox name="$parent_InputBox7" inherits="InputBoxTemplate" id="220">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-80"/>
+							<absdimension x="-150" y="-80"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- R3 -->
-			<editbox name="$parent_InputBox8" inherits="InputBoxTemplate" id="23">
+			<editbox name="$parent_InputBox8" inherits="InputBoxTemplate" id="230">
 				<size>
 					<absdimension x="100" y="26"/>
 				</size>
 				<anchors>
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-100"/>
+							<absdimension x="-150" y="-100"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- R4 -->
-			<editbox name="$parent_InputBox9" inherits="InputBoxTemplate" id="24">
+			<editbox name="$parent_InputBox9" inherits="InputBoxTemplate" id="240">
 				<size> 
 					<absdimension x="100" y="26"/>
 				</size> 
 				<anchors> 
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-120"/>
+							<absdimension x="-150" y="-120"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
 			<!-- R5 -->
-			<editbox name="$parent_InputBox10" inherits="InputBoxTemplate" id="25">
+			<editbox name="$parent_InputBox10" inherits="InputBoxTemplate" id="250">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-140"/>
+							<absdimension x="-150" y="-140"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
-<!-- Eingabefelder: Range Verteiler --> 
-			<!-- Links -->
-			<editbox name="$parent_InputBox11" inherits="InputBoxTemplate" id="16">
+			<!-- Eingabefelder: Range Linke Seite --> 
+			<!-- RL1 -->
+			<editbox name="$parent_InputBox11" inherits="InputBoxTemplate" id="310">
 				<size> 
 					<absdimension x="100" y="26"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-200"/>
+							<absdimension x="90" y="-200"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
-			<!-- Rechts -->
-			<editbox name="$parent_InputBox12" inherits="InputBoxTemplate" id="26">
+			<!-- RL2 -->
+			<editbox name="$parent_InputBox12" inherits="InputBoxTemplate" id="320">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="40" y="-220"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
+			<!-- RL3 -->
+			<editbox name="$parent_InputBox13" inherits="InputBoxTemplate" id="330">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="150" y="-240"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
+			<!-- RL4 -->
+			<editbox name="$parent_InputBox14" inherits="InputBoxTemplate" id="340">
+				<size> 
+					<absdimension x="100" y="26"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="200" y="-260"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
+			<!-- Eingabefelder: Range Rechte Seite --> 			
+			<!-- RR1 -->
+			<editbox name="$parent_InputBox15" inherits="InputBoxTemplate" id="410">
 				<size>
 					<absdimension x="100" y="26"/>
 				</size> 
 				<anchors> 
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-200"/>
+							<absdimension x="-90" y="-200"/>
 						</offset>
 					</anchor>
 				</anchors>
 			</editbox>
-<!-- Button: Save Data, speichert die Daten in die Tabellen -->
-			<button name="$parent_ButtonValidate" inherits="UIPanelButtonTemplate" text="Save Data" id="1">
+			<!-- RR2 -->
+			<editbox name="$parent_InputBox16" inherits="InputBoxTemplate" id="420">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-40" y="-220"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
+			<!-- RR3 -->
+			<editbox name="$parent_InputBox17" inherits="InputBoxTemplate" id="430">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-150" y="-240"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>
+			<!-- RR4 -->
+			<editbox name="$parent_InputBox18" inherits="InputBoxTemplate" id="440">
+				<size>
+					<absdimension x="100" y="26"/>
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-200" y="-260"/>
+						</offset>
+					</anchor>
+				</anchors>
+			</editbox>		
+			<!-- Button: Save Data, speichert die Daten in die Tabellen -->
+			<button name="$parent_ButtonValidate" inherits="UIPanelButtonTemplate" text="Save Data" id="100">
 				<size> 
 					<absdimension x="100" y="24"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-260"/>
+							<absdimension x="50" y="-300"/>
 						</offset>
 					</anchor>
 				</anchors> 
@@ -219,38 +298,347 @@
 					<onclick>BiteME:SendData(arg1)</onclick>
 				</scripts>
 			</button>
-			<!-- Button: Save Data -->
-			<button name="$parent_ButtonSendSetup" inherits="UIPanelButtonTemplate" text="Send Setup" id="2">
+			<!-- Button: Send Setup schickt die Austellung an den Raidchat-->
+			<button name="$parent_ButtonSendSetup" inherits="UIPanelButtonTemplate" text="Send Setup" id="101">
 				<size> 
 					<absdimension x="100" y="24"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="140" y="-260"/>
+							<absdimension x="170" y="-300"/>
 						</offset>
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:OnClick(arg1)</onclick>
+					<onclick>BiteME:SendSetup(arg1)</onclick>
 				</scripts>
 			</button>
-			<!-- Button: GetTarget -->
-			<button name="$parent_ButtonGetTarget" inherits="UIPanelButtonTemplate" text="Get Target" id="3">
+			<!-- Button: Send Melee Setup-->
+			<button name="$parent_ButtonSendMelee" inherits="UIPanelButtonTemplate" text="Send Melee Setup" id="102">
 				<size> 
-					<absdimension x="100" y="24"/> 
+					<absdimension x="140" y="24"/> 
 				</size> 
 				<anchors> 
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="260" y="-260"/>
+							<absdimension x="290" y="-300"/>
 						</offset>
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget(arg1)</onclick>
+					<onclick>BiteME:SendMelee(arg1)</onclick>
 				</scripts>
 			</button>
+			<!-- Button: Send Ranged Setup -->
+			<button name="$parent_ButtonSendRanged" inherits="UIPanelButtonTemplate" text="Send Ranged Setup" id="103">
+				<size> 
+					<absdimension x="140" y="24"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="450" y="-300"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:SendRanged(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Gettarget Buttons für die einzelnen Editboxen -->	
+			<!-- Gettarget Buttons Melees Links -->			
+			<!-- Button: GetTarget4L1 -->
+			<button name="$parent_ButtonGetTarget4L1" inherits="UIPanelButtonTemplate" text="T" id="1">
+				<size> 
+					<absdimension X="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-63"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4L2 -->
+			<button name="$parent_ButtonGetTarget4L2" inherits="UIPanelButtonTemplate" text="T" id="2">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-83"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4L3 -->
+			<button name="$parent_ButtonGetTarget4L3" inherits="UIPanelButtonTemplate" text="T" id="3">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-103"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4L4 -->
+			<button name="$parent_ButtonGetTarget4L4" inherits="UIPanelButtonTemplate" text="T" id="4">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-123"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4L5 -->
+			<button name="$parent_ButtonGetTarget4L5" inherits="UIPanelButtonTemplate" text="T" id="5">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-143"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Gettarget Buttons Melees Rechts -->			
+			<!-- Button: GetTarget4R1 -->
+			<button name="$parent_ButtonGetTarget4R1" inherits="UIPanelButtonTemplate" text="T" id="6">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-63"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4R2 -->
+			<button name="$parent_ButtonGetTarget4R2" inherits="UIPanelButtonTemplate" text="T" id="7">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-83"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4R3 -->
+			<button name="$parent_ButtonGetTarget4R3" inherits="UIPanelButtonTemplate" text="T" id="8">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-103"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4R4 -->
+			<button name="$parent_ButtonGetTarget4R4" inherits="UIPanelButtonTemplate" text="T" id="9">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-123"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4R5 -->
+			<button name="$parent_ButtonGetTarget4R5" inherits="UIPanelButtonTemplate" text="T" id="10">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-143"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Gettarget Buttons Ranged Links -->			
+			<!-- Button: GetTarget4RL1 -->
+			<button name="$parent_ButtonGetTarget4RL1" inherits="UIPanelButtonTemplate" text="T" id="11">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="195" y="-203"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RL2 -->
+			<button name="$parent_ButtonGetTarget4RL2" inherits="UIPanelButtonTemplate" text="T" id="12">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="145" y="-223"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RL3 -->
+			<button name="$parent_ButtonGetTarget4RL3" inherits="UIPanelButtonTemplate" text="T" id="13">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="255" y="-243"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RL4 -->
+			<button name="$parent_ButtonGetTarget4RL4" inherits="UIPanelButtonTemplate" text="T" id="14">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="305" y="-263"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Gettarget Buttons Ranged Rechts -->			
+			<!-- Button: GetTarget4RR1 -->
+			<button name="$parent_ButtonGetTarget4RR1" inherits="UIPanelButtonTemplate" text="T" id="15">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-65" y="-203"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RR2 -->
+			<button name="$parent_ButtonGetTarget4RR2" inherits="UIPanelButtonTemplate" text="T" id="16">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-15" y="-223"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RR3 -->
+			<button name="$parent_ButtonGetTarget4RR3" inherits="UIPanelButtonTemplate" text="T" id="17">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-125" y="-243"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>
+			<!-- Button: GetTarget4RR4 -->
+			<button name="$parent_ButtonGetTarget4RR4" inherits="UIPanelButtonTemplate" text="T" id="18">
+				<size> 
+					<absdimension x="20" y="20"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPRIGHT">
+						<offset>
+							<absdimension x="-175" y="-263"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
+				</scripts>
+			</button>			
 		</frames>
 		<layers> 
 			<!-- Schrift im frame -->
@@ -271,7 +659,7 @@
 					<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-35"/>
+							<absdimension x="150" y="-35"/>
 						</offset>
 					</anchor>
 					</anchors>
@@ -282,29 +670,29 @@
 					<anchors>
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-155" y="-35"/>
+							<absdimension x="-180" y="-35"/>
 						</offset>
 					</anchor>
 					</anchors>
 					<color r="0.8" g="0.5" b="0"/>
 				</fontstring>
-				<!-- Text: Rangeverteiler Links -->
-				<fontstring name="$parent_Text4" inherits="GameFontNormalSmall" text="Rangeverteiler Links">
+				<!-- Text: Ranged Links -->
+				<fontstring name="$parent_Text4" inherits="GameFontNormalSmall" text="Ranged Links">
 					<anchors>
 					<anchor point="TOPLEFT">
 						<offset>
-							<absdimension x="20" y="-180"/>
+							<absdimension x="90" y="-180"/>
 						</offset>
 					</anchor>
 					</anchors>
 					<color r="0.8" g="0.5" b="0"/>
 				</fontstring>
-				<!-- Text: Rangeverteiler Rechts -->
-				<fontstring name="$parent_Text5" inherits="GameFontNormalSmall" text="Rangeverteiler Rechts">
+				<!-- Text: Ranged Rechts -->
+				<fontstring name="$parent_Text5" inherits="GameFontNormalSmall" text="Ranged Rechts">
 					<anchors>
 					<anchor point="TOPRIGHT">
 						<offset>
-							<absdimension x="-120" y="-180"/>
+							<absdimension x="-130" y="-180"/>
 						</offset>
 					</anchor>
 					</anchors>

@@ -1,5 +1,6 @@
 ﻿-- Einstellungen
 local BiteMe = {}
+-- Melees
 BiteMe["Left"] = {
 	"L1", --L1
 	"L2", --L2
@@ -14,6 +15,20 @@ BiteMe["Right"] = {
 	"R4", --R4
 	"R5"  --R5
 }
+-- Ranged
+BiteMe["RLeft"] = {
+	"RL1", --RL1
+	"RL2", --RL2
+	"RL3", --RL3
+	"RL4", --RL4
+}
+BiteMe["RRight"] = {
+	"RR1", --RR1
+	"RR2", --RR2
+	"RR3", --RR3
+	"RR4", --RR4
+}
+
 local RangedPlayer1 = "RP1"
 local RangedPlayer2 = "RP2"
 local Prefix = "BiteME: " -- Pröfix für z.B. die Whispers
@@ -108,18 +123,50 @@ function BiteME:GetTarget(...)
 	end
 end
 
--- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
-function BiteME:OnClick()
-	self:channel("Aufstellung Melees Blood Queen")
+-- Funktion für GetTargetWithID soll später mal alle 18 OnClick Funktionen abdecken. Fehlt: String to Object.
+function BiteME:GetTargetWithID(...)
+   	id = this:GetID()
+	local frame = "BiteMe_InputBox" .. id
+	--local frame2 = getGlobal("BiteMe_InputBox" .. id)
+	--local frame3 = getObject(frame)
+	--local frame4 = BiteMe:getObject(frame)
+	--local frame5 = BiteMe:GetNamedObject(frame)
+	--frame:Insert(UnitName("target"))
+	SendChatMessage(frame, "WHISPER", nil, "Zipzap")
+
+end
+
+-- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat || RangedRechts muss neuen Namen bekommen
+function BiteME:SendSetup()
+	self:channel("Aufstellung Blood Queen")
+	self:channel("Melees:")
 	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Left"][1],BiteMe["Left"][2],BiteMe["Left"][3],BiteMe["Left"][4],BiteMe["Left"][5]))
 	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Right"][1],BiteMe["Right"][2],BiteMe["Right"][3],BiteMe["Right"][4],BiteMe["Right"][5]))
-	self:channel(format("Verteiler bei den Mes ist %s",BiteMe["Left"][1]))
-	self:channel(format("Verteiler bei den Ranged ist %s",RangedPlayer1))
+	self:channel("Ranged:")
+	self:channel(format("Linke Seite: %s, %s, %s, %s",BiteMe["RLeft"][1],BiteMe["RLeft"][2],BiteMe["RLeft"][3],BiteMe["RLeft"][4]))
+	self:channel(format("Rechte Seite: %s, %s, %s, %s",BiteMe["RRight"][1],BiteMe["RRight"][2],BiteMe["RRight"][3],BiteMe["RRight"][4]))
+	self:channel(format("Verteiler bei den Melees ist %s",BiteMe["Left"][1]))
+	self:channel(format("Verteiler bei den Ranged ist %s",BiteMe["RLeft"][1]))
+end
+
+-- Funktion für den Button Send Melee Setup. 
+function BiteME:SendMelee()
+	self:channel("Melees:")
+	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Left"][1],BiteMe["Left"][2],BiteMe["Left"][3],BiteMe["Left"][4],BiteMe["Left"][5]))
+	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Right"][1],BiteMe["Right"][2],BiteMe["Right"][3],BiteMe["Right"][4],BiteMe["Right"][5]))
+end
+
+-- Funktion für den Button Send Ranged Setup.
+function BiteME:SendRanged()
+	self:channel("Ranged:")
+	self:channel(format("Linke Seite: %s, %s, %s, %s",BiteMe["RLeft"][1],BiteMe["RLeft"][2],BiteMe["RLeft"][3],BiteMe["RLeft"][4]))
+	self:channel(format("Rechte Seite: %s, %s, %s, %s",BiteMe["RRight"][1],BiteMe["RRight"][2],BiteMe["RRight"][3],BiteMe["RRight"][4]))
+
 end
 
 -- Funktion für den Button SendData. Setter Funktionen für die BiteMe Tabelle
 function BiteME:SendData()
-	-- Linke Seite  
+	-- Melee Linke Seite  
    	if BiteMe_InputBox1:GetText() then    		
 		BiteMe["Left"][1] = BiteMe_InputBox1:GetText()
 	end
@@ -135,7 +182,7 @@ function BiteME:SendData()
 	if BiteMe_InputBox5:GetText() then
 		BiteMe["Left"][5] = BiteMe_InputBox5:GetText()
    	end
-	-- Rechte Seite  
+	-- Melee Rechte Seite  
    	if BiteMe_InputBox6:GetText() then
     	BiteMe["Right"][1] = BiteMe_InputBox6:GetText()
 	end
@@ -151,12 +198,31 @@ function BiteME:SendData()
 	if BiteMe_InputBox10:GetText() then
 		BiteMe["Right"][5] = BiteMe_InputBox10:GetText()
 	end
-	-- Ranged
+	-- Ranged Linke Seite
 	if BiteMe_InputBox11:GetText() then
-		RangedPlayer1 = BiteMe_InputBox11:GetText()
+		BiteMe["RLeft"][1] = BiteMe_InputBox11:GetText()
 	end
 	if BiteMe_InputBox12:GetText() then
-		RangedPlayer2 = BiteMe_InputBox12:GetText()
+		BiteMe["RLeft"][2] = BiteMe_InputBox12:GetText()
+	end
+	if BiteMe_InputBox13:GetText() then
+		BiteMe["RLeft"][3] = BiteMe_InputBox13:GetText()
+	end
+	if BiteMe_InputBox14:GetText() then
+		BiteMe["RLeft"][4] = BiteMe_InputBox14:GetText()
+	end
+	-- Ranged Rechte Seite
+	if BiteMe_InputBox15:GetText() then
+		BiteMe["RRight"][1] = BiteMe_InputBox15:GetText()
+	end
+	if BiteMe_InputBox16:GetText() then
+		BiteMe["RRight"][2] = BiteMe_InputBox16:GetText()
+	end
+	if BiteMe_InputBox17:GetText() then
+		BiteMe["RRight"][3] = BiteMe_InputBox17:GetText()
+	end
+	if BiteMe_InputBox18:GetText() then
+		BiteMe["RRight"][4] = BiteMe_InputBox18:GetText()
 	end
 end
 
