@@ -101,7 +101,7 @@ function BiteME:BiteOrder()
 end
 
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
-function BiteME:OnClick(...)
+function BiteME:OnClick()
 	self:channel("Aufstellung Melees Blood Queen")
 	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Left"][1],BiteMe["Left"][2],BiteMe["Left"][3],BiteMe["Left"][4],BiteMe["Left"][5]))
 	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Right"][1],BiteMe["Right"][2],BiteMe["Right"][3],BiteMe["Right"][4],BiteMe["Right"][5]))
@@ -110,7 +110,7 @@ function BiteME:OnClick(...)
 end
 
 -- Funktion für den Button SendData. Setter Funktionen für die BiteMe Tabelle
-function BiteMe:SendData(...)
+function BiteME:SendData()
 	-- Linke Seite  
    	if BiteMe_InputBox1:GetText() then    		
 		BiteMe["Left"][1] = BiteMe_InputBox1:GetText()
@@ -163,8 +163,6 @@ function BiteME:Toggle()
 		end
 	end
 end
-
--- HELPER
 
 --  HELPER  ZEUGS
 function BiteME:whisper(msg, name)

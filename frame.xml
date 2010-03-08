@@ -216,7 +216,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteMe:SendData(arg1)</onclick>
+					<onclick>BiteME:SendData(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: Save Data -->
