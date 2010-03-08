@@ -235,6 +235,22 @@
 					<onclick>BiteME:OnClick(arg1)</onclick>
 				</scripts>
 			</button>
+			<!-- Button: GetTarget -->
+			<button name="$parent_ButtonGetTarget" inherits="UIPanelButtonTemplate" text="Get Target" id="3">
+				<size> 
+					<absdimension x="100" y="24"/> 
+				</size> 
+				<anchors> 
+					<anchor point="TOPLEFT">
+						<offset>
+							<absdimension x="260" y="-260"/>
+						</offset>
+					</anchor>
+				</anchors> 
+				<scripts>
+					<onclick>BiteME:GetTarget(arg1)</onclick>
+				</scripts>
+			</button>
 		</frames>
 		<layers> 
 			<!-- Schrift im frame -->
