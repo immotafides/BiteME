@@ -5,7 +5,7 @@ BiteMe["Melee"]["Left"] = {
 	"ML1", --L1
 	"ML2", --L2
 	"ML3", --L3
-	"ML4",  --L4
+	"ML4", --L4
 	"ML5"  --L5
 }
 BiteMe["Melee"]["Right"] = {
@@ -21,7 +21,7 @@ BiteMe["Ranged"]["Left"] = {
 	"RL2", --RL2
 	"RL3", --RL3
 	"RL4", --RL4
-	"RL5"  --L5
+	"RL5"  --RL5
 }
 BiteMe["Ranged"]["Right"] = {
 	"RR1", --RR1
@@ -130,15 +130,6 @@ function BiteME:BiteOrder()
 	reordered = true
 end
 
--- Funktion für den Button GetTarget4L1
-function BiteME:GetTarget4L1(...)
-	if UnitName("target") then
-		self:channel("Target: "..UnitName("target"))
-		BiteMe_InputBox1:Insert(UnitName("target"))
-	end
-end
-
-
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
 function BiteME:OnClick()
 	self:channel("Aufstellung Melees Blood Queen")
@@ -148,7 +139,7 @@ function BiteME:OnClick()
 	self:channel(format("Verteiler bei den Ranged ist %s",BiteMe["Ranged"]["left"][1]))
 end
 
--- Funktion für GetTargetWithID soll später mal alle 18 OnClick Funktionen abdecken. Fehlt: String to Object.
+-- Funktion für GetTargetWithID soll später mal alle 18 OnClick Funktionen abdecken. Fehlt: String to Object. Solange arbeiten wir mit 18 mal der selben Funktion. Sieh Unten.
 function BiteME:GetTargetWithID(...)
    	id = this:GetID()
 	local frame = "BiteMe_InputBox" .. id
@@ -177,8 +168,8 @@ end
 -- Funktion für den Button Send Melee Setup. 
 function BiteME:SendMelee()
 	self:channel("Melees:")
-	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Left"][1],BiteMe["Left"][2],BiteMe["Left"][3],BiteMe["Left"][4],BiteMe["Left"][5]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Right"][1],BiteMe["Right"][2],BiteMe["Right"][3],BiteMe["Right"][4],BiteMe["Right"][5]))
+	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Left"][1],BiteMe["Melee"]["Left"][2],BiteMe["Melee"]["Left"][3],BiteMe["Melee"]["Left"][4],BiteMe["Melee"]["Left"][5]))
+	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Right"][1],BiteMe["Melee"]["Right"][2],BiteMe["Melee"]["Right"][3],BiteMe["Melee"]["Right"][4],BiteMe["Melee"]["Right"][5]))
 end
 
 -- Funktion für den Button Send Ranged Setup.
@@ -292,3 +283,130 @@ function filterOutgoing(self, event, ...)
 end
 -- Filter muss noch registriert werden
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filterOutgoing)
+
+-- Bis GetTargetWithId Funktioniert, muss der Code hier herhalten.
+-- Funktion für den Button GetTarget4L1
+function BiteME:GetTarget4L1(...)
+	if UnitName("target") then
+		BiteMe_InputBox1:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4L2
+function BiteME:GetTarget4L2(...)
+	if UnitName("target") then
+		BiteMe_InputBox2:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4L3
+function BiteME:GetTarget4L3(...)
+	if UnitName("target") then
+		BiteMe_InputBox3:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4L4
+function BiteME:GetTarget4L4(...)
+	if UnitName("target") then
+		BiteMe_InputBox4:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4L5
+function BiteME:GetTarget4L5(...)
+	if UnitName("target") then
+		BiteMe_InputBox5:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4R1
+function BiteME:GetTarget4R1(...)
+	if UnitName("target") then
+		BiteMe_InputBox6:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4R2
+function BiteME:GetTarget4R2(...)
+	if UnitName("target") then
+		BiteMe_InputBox7:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4R3
+function BiteME:GetTarget4R3(...)
+	if UnitName("target") then
+		BiteMe_InputBox8:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4R4
+function BiteME:GetTarget4R4(...)
+	if UnitName("target") then
+		BiteMe_InputBox9:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4R5
+function BiteME:GetTarget4R5(...)
+	if UnitName("target") then
+		BiteMe_InputBox10:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RL1
+function BiteME:GetTarget4RL1(...)
+	if UnitName("target") then
+		BiteMe_InputBox11:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RL2
+function BiteME:GetTarget4RL2(...)
+	if UnitName("target") then
+		BiteMe_InputBox12:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RL3
+function BiteME:GetTarget4RL3(...)
+	if UnitName("target") then
+		BiteMe_InputBox13:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RL4
+function BiteME:GetTarget4RL4(...)
+	if UnitName("target") then
+		BiteMe_InputBox14:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RR1
+function BiteME:GetTarget4RR1(...)
+	if UnitName("target") then
+		BiteMe_InputBox15:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RR2
+function BiteME:GetTarget4RR2(...)
+	if UnitName("target") then
+		BiteMe_InputBox16:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RR3
+function BiteME:GetTarget4RR3(...)
+	if UnitName("target") then
+		BiteMe_InputBox17:Insert(UnitName("target"))
+	end
+end
+
+-- Funktion für den Button GetTarget4RR4
+function BiteME:GetTarget4RR4(...)
+	if UnitName("target") then
+		BiteMe_InputBox18:Insert(UnitName("target"))
+	end
+end
