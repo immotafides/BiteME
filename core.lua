@@ -34,7 +34,7 @@ local Prefix = "BiteME: " -- Pröfix für z.B. die Whispers
 local reordered = false
 
 -- funktionale Listen
-local tmp = BiteME
+local tmp = BiteMe
 local Vamires = {}
 local DeadVampires = {}
 local NextTargets = {}
