@@ -60,7 +60,7 @@ BiteME:SetScript("OnEvent",
 			--  AUREN    
 			if type == "SELL_AURA_REMOVED" then
 				spellID, spellName = select(9, ...)				
-				if spellID == 70877 not reordered then -- Frenzied Bloodthirsts
+				if spellID == 70877 and not reordered then -- Frenzied Bloodthirsts
 					self:AnnounceNextTargets()
 				end
 			elseif type == "SPELL_AURA_APPLIED" or type == "SPELL_AURA_APPLIED_DOSE" then
