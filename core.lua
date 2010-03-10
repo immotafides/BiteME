@@ -33,7 +33,19 @@ BiteMe["Ranged"]["Right"] = {
 local Prefix = "BiteME: " -- Pröfix für z.B. die Whispers
 local reordered = false
 
-local BiteTargets = {}
+-- funktionale Listen
+local tmp = BiteME
+local Vamires = {}
+local DeadVampires = {}
+local NextTargets = {}
+local CurrentTargets = {}
+
+-- Kram zum tracken der Runden
+local FrenziedPlayers = {} -- Tabelle in der die Spieler reingeschrieben werden
+local lastFrenziedTimestamp = time() -- Zeitstempel zum resetten der Liste
+local frenzied_delta = 20 -- Sekunden die zwischen den Frenzied Debuff maximal liegen dürfen
+local round = 0
+local numFrenzied = 2 ^ round -- Anzahl der aktuell zu erwartenden  Bisse
 
 -- alle unsere Combatlog Daten
 local timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs, spellID, spellName
@@ -44,18 +56,32 @@ local BiteME = CreateFrame("FRAME", "BiteME")
 BiteME:SetScript("OnEvent",
 	function(self, event, ...)
 		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
-			timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs = select(1, ...)		
+			timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs = select(1, ...)
 			--  AUREN    
-			if type == "SPELL_AURA_APPLIED" or type == "SPELL_AURA_APPLIED_DOSE" then
+			if type == "SELL_AURA_REMOVED" then
 				spellID, spellName = select(9, ...)				
-				if spellID == 71473 then  -- Essence of the Blood Queen
-					if not reordered then self:BiteReorder() end					
-					self:Announce()
+				if spellID == 70877 not reordered then -- Frenzied Bloodthirsts
+					self:AnnounceNextTargets()
 				end
+			elseif type == "SPELL_AURA_APPLIED" or type == "SPELL_AURA_APPLIED_DOSE" then
+				spellID, spellName = select(9, ...)				
+				if spellID == 71473 then
+					if not reordered then -- Essence of the Blood Queen
+						self:BiteReorder()
+						self:SetNextTargets()
+						self:AnnounceNextTargets()
+					end
+					table.insert(Vampires, dstName)
+				elseif spellID == 70923 then -- Uncontrollable Frenzy
+					self:SomeoneDied() -- kommt aufs Gleiche raus :)
+					self:AnnounceNextTargets()
+				end
+			elseif type == "UNIT_DIED" then
+				self:SomeoneDied()
 			end
 		elseif event:sub(1,12) == "ZONE_CHANGED" then
 			--self:message(format("Zone changed to %q",GetSubZoneText()))
-			reordered = false -- wir mißbrauchen das Event zum resetten
+			self:Reset() -- wir mißbrauchen das Event zum resetten
 			self:CheckZone()
 		elseif event == "ADDON_LOADED" then
 			self:Initialize()
@@ -63,7 +89,7 @@ BiteME:SetScript("OnEvent",
 	end)	
 BiteME:RegisterEvent("ADDON_LOADED")
 
-function BiteME:Initialize()	
+function BiteME:Initialize()
 	self:UnregisterEvent("ADDON_LOADED")
 	-- Slashcommands einbinden
 	SLASH_BITEME1 = "/biteme"
@@ -78,7 +104,7 @@ function BiteME:Initialize()
 end
 
 -- Handler der Slashbefehle
-function BiteME:SlashCommandHandler(arg)	
+function BiteME:SlashCommandHandler(arg)
  	self:Toggle(arg);
 end
 
@@ -95,140 +121,197 @@ function BiteME:CheckZone()
 	end	
 end
 
+-- Funktion zum Resetten der Listen
+function BiteME:Reset()
+	-- niemand wird gebissen
+	BittenPlayers = wipe(BittenPlayers)
+	-- Liste wurde noch nicht sortiert
+	reordered = false	
+end
+
 function BiteME:BiteReorder()
+	-- Arbeitsliste
+	tmp = BiteMe
+	-- Flag setzen
 	reordered = true
 	-- Ist der erste gebissene kein Verteiler? Dann verändern wir die Reihenfolgen
-	if  dstName ~= BiteMe["Melee"]["Left"][1] or dstName ~= BiteMe["Melee"]["Right"][1] or dstName ~= BiteMe["Ranged"]["Left"][1] or dstName ~= BiteMe["Ranged"]["Right"][1] then
+	if  dstName ~= tmp["Melee"]["Left"][1] or dstName ~= tmp["Melee"]["Right"][1] or dstName ~= tmp["Ranged"]["Left"][1] or dstName ~= tmp["Ranged"]["Right"][1] then
 		self:message(format("%s ist kein Verteiler, suche nach anderen", dstName))
 		-- Melees links
-		for k,v in pairs(BiteMe["Melee"]["Left"]) do
+		for k,v in pairs(tmp["Melee"]["Left"]) do
 			if v == dstName then					
-				table.remove(BiteMe["Melee"]["Left"], k)
-				table.insert(BiteMe["Melee"]["Left"], 1 , v)				
+				table.remove(tmp["Melee"]["Left"], k)
+				table.insert(tmp["Melee"]["Left"], 1 , v)				
 			end
 		end
 		-- Melees rechts
-		for k,v in pairs(BiteMe["Melee"]["Right"]) do
+		for k,v in pairs(tmp["Melee"]["Right"]) do
 			if v == dstName then					
-				table.remove(BiteMe["Melee"]["Right"],k)
-				table.insert(BiteMe["Melee"]["Right"],1,v)				
+				table.remove(tmp["Melee"]["Right"],k)
+				table.insert(tmp["Melee"]["Right"],1,v)				
 			end
 		end
 		-- Ranged links
-		for k,v in pairs(BiteMe["Ranged"]["Left"]) do
+		for k,v in pairs(tmp["Ranged"]["Left"]) do
 			if v == dstName then
-				BiteMe["Ranged"]["Left"][k] = BiteMe["Ranged"]["Left"][1]
-				BiteMe["Ranged"]["Left"][1] = dstName				
+				tmp["Ranged"]["Left"][k] = tmp["Ranged"]["Left"][1]
+				tmp["Ranged"]["Left"][1] = dstName				
 			end
 		end
 		-- Ranged rechts
-		for k,v in pairs(BiteMe["Ranged"]["Right"]) do
+		for k,v in pairs(tmp["Ranged"]["Right"]) do
 			if v == dstName then
-				BiteMe["Ranged"]["Right"][k] = BiteMe["Ranged"]["Right"][1]
-				BiteMe["Ranged"]["Right"][1] = dstName				
+				tmp["Ranged"]["Right"][k] = tmp["Ranged"]["Right"][1]
+				tmp["Ranged"]["Right"][1] = dstName				
 			end
 		end
-	end
-	self:SetBiteTargets()
+	end	
 end
 
 -- Funktion für die wirkliche Bissreihenfolge
-function BiteME:SetBiteTargets()
+function BiteME:SetNextTargets()
 	-- Linker Melee Verteiler zuerst gebissen
-	if dstName == BiteMe["Melee"]["Left"][1] then
+	if dstName == tmp["Melee"]["Left"][1] then
 		-- Ziele setzen
-		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
-			BiteMe["Ranged"]["Left"][1],
-			BiteMe["Melee"]["Right"][1]
+		NextTargets[tmp["Melee"]["Left"][1]] = {
+			tmp["Ranged"]["Left"][1],
+			tmp["Melee"]["Right"][1]
 		}
-		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
+		NextTargets[tmp["Melee"]["Right"][1]] = {
 			nil,
 			nil
 		}
 	-- Rechter Melee Verteiler zuerst gebissen
-	elseif dstName == BiteMe["Melee"]["Right"][1] then
+	elseif dstName == tmp["Melee"]["Right"][1] then
 		-- Ziele setzen
-		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
+		NextTargets[tmp["Melee"]["Left"][1]] = {
 			nil,
 			nil
 		}
-		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
-			BiteMe["Ranged"]["Left"][1],
-			BiteMe["Melee"]["Left"][1]
+		NextTargets[tmp["Melee"]["Right"][1]] = {
+			tmp["Ranged"]["Left"][1],
+			tmp["Melee"]["Left"][1]
 		}
 	-- Ein Ranged hat den ersten Biss bekommen
 	else
-		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
+		NextTargets[tmp["Melee"]["Left"][1]] = {
 			nil,
 			nil
 		}
-		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
+		NextTargets[tmp["Melee"]["Right"][1]] = {
 			nil,
 			nil
 		}
 	end
 	-- die letzten beiden Bisse noch
-	table.insert(BiteTargets[BiteMe["Melee"]["Left"][1]],3,BiteMe["Melee"]["Left"][2])
-	table.insert(BiteTargets[BiteMe["Melee"]["Left"][1]],4,BiteMe["Melee"]["Left"][4])
-	table.insert(BiteTargets[BiteMe["Melee"]["Right"][1]],3,BiteMe["Melee"]["Right"][2])
-	table.insert(BiteTargets[BiteMe["Melee"]["Right"][1]],4,BiteMe["Melee"]["Right"][4])
+	table.insert(NextTargets[tmp["Melee"]["Left"][1]],3,tmp["Melee"]["Left"][2])
+	table.insert(NextTargets[tmp["Melee"]["Left"][1]],4,tmp["Melee"]["Left"][4])
+	table.insert(NextTargets[tmp["Melee"]["Right"][1]],3,tmp["Melee"]["Right"][2])
+	table.insert(NextTargets[tmp["Melee"]["Right"][1]],4,tmp["Melee"]["Right"][4])
 	
 	-- das Ganze nochmal für die Ranged Verteiler	
 	-- Linker Ranged Verteiler zuerst gebissen
-	if dstName == BiteMe["Ranged"]["Left"][1] then
+	if dstName == tmp["Ranged"]["Left"][1] then
 		-- Ziele setzen
-		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
-			BiteMe["Melee"]["Left"][1],
-			BiteMe["Ranged"]["Right"][1]
+		NextTargets[tmp["Ranged"]["Left"][1]] = {
+			tmp["Melee"]["Left"][1],
+			tmp["Ranged"]["Right"][1]
 		}
-		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
+		NextTargets[tmp["Ranged"]["Right"][1]] = {
 			nil,
 			nil
 		}
 	-- Rechter Ranged Verteiler zuerst gebissen
-	elseif dstName == BiteMe["Ranged"]["Right"][1] then
+	elseif dstName == tmp["Ranged"]["Right"][1] then
 		-- Ziele setzen
-		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
+		NextTargets[tmp["Ranged"]["Left"][1]] = {
 			nil,
 			nil
 		}
-		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
-			BiteMe["Melee"]["Left"][1],
-			BiteMe["Ranged"]["Left"][1]
+		NextTargets[tmp["Ranged"]["Right"][1]] = {
+			tmp["Melee"]["Left"][1],
+			tmp["Ranged"]["Left"][1]
 		}
 	-- Ein Ranged hat den ersten Biss bekommen
 	else
-		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
+		NextTargets[tmp["Ranged"]["Left"][1]] = {
 			nil,
 			nil
 		}
-		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
+		NextTargets[tmp["Ranged"]["Right"][1]] = {
 			nil,
 			nil
 		}
 	end
 	-- die letzten beiden Bisse noch
-	table.insert(BiteTargets[BiteMe["Ranged"]["Left"][1]],3,BiteMe["Ranged"]["Left"][3])
-	table.insert(BiteTargets[BiteMe["Ranged"]["Left"][1]],4,BiteMe["Ranged"]["Left"][2])
-	table.insert(BiteTargets[BiteMe["Ranged"]["Right"][1]],3,BiteMe["Ranged"]["Right"][3])
-	table.insert(BiteTargets[BiteMe["Ranged"]["Right"][1]],4,BiteMe["Ranged"]["Right"][2])
+	table.insert(NextTargets[tmp["Ranged"]["Left"][1]],3,tmp["Ranged"]["Left"][3])
+	table.insert(NextTargets[tmp["Ranged"]["Left"][1]],4,tmp["Ranged"]["Left"][2])
+	table.insert(NextTargets[tmp["Ranged"]["Right"][1]],3,tmp["Ranged"]["Right"][3])
+	table.insert(NextTargets[tmp["Ranged"]["Right"][1]],4,tmp["Ranged"]["Right"][2])
 	
 	-- und die restlichen  Bisse
-	BiteTargets[BiteMe["Melee"]["Left"][2]] =  {nil, nil, nil, BiteMe["Melee"]["Left"][1] }
-	BiteTargets[BiteMe["Melee"]["Left"][3]] =  {nil, nil, nil, nil}
-	BiteTargets[BiteMe["Melee"]["Left"][4]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Left"][2]] =  {nil, nil, nil, tmp["Melee"]["Left"][1]}
+	NextTargets[tmp["Melee"]["Left"][3]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Left"][4]] =  {nil, nil, nil, nil}
 	
-	BiteTargets[BiteMe["Melee"]["Right"][2]] = {nil, nil, nil, BiteMe["Melee"]["Right"][1] }
-	BiteTargets[BiteMe["Melee"]["Right"][3]] = {nil, nil, nil, nil}
-	BiteTargets[BiteMe["Melee"]["Right"][4]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Right"][2]] = {nil, nil, nil, tmp["Melee"]["Right"][1]}
+	NextTargets[tmp["Melee"]["Right"][3]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Right"][4]] = {nil, nil, nil, nil}
 	
-	BiteTargets[BiteMe["Ranged"]["Left"][2]] =  {nil, nil, nil, nil}
-	BiteTargets[BiteMe["Ranged"]["Left"][3]] =  {nil, nil, nil, BiteMe["Ranged"]["Left"][4]}
-	BiteTargets[BiteMe["Ranged"]["Left"][4]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Left"][2]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Left"][3]] =  {nil, nil, nil, tmp["Ranged"]["Left"][4]}
+	NextTargets[tmp["Ranged"]["Left"][4]] =  {nil, nil, nil, nil}
 	
-	BiteTargets[BiteMe["Ranged"]["Right"][2]] = {nil, nil, nil, nil}
-	BiteTargets[BiteMe["Ranged"]["Right"][3]] = {nil, nil, nil, BiteMe["Ranged"]["Right"][4]}
-	BiteTargets[BiteMe["Ranged"]["Right"][4]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Right"][2]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Right"][3]] = {nil, nil, nil, tmp["Ranged"]["Right"][4]}
+	NextTargets[tmp["Ranged"]["Right"][4]] = {nil, nil, nil, nil}
+end
+
+function BiteME:AnnounceNextTargets()
+	-- Reset der Beacons
+	if #FrenziedVampires > numFrenzied - #DeadVampires or difftime(time(),lastFrenziedTimestamp) > frenzied_delta then
+		FrenziedVampires = wipe(FrenziedVampires)
+		round = round + 1
+		numFrenzied = 2 ^ round
+	end	
+	-- Zeit setzen
+	lastFrenziedTimestamp = time()
+	-- Die Tabelle der Reihenfolge mit Namen der Spieler befüllen		
+	table.insert(FrenziedVampires, dstName)
+	-- sobald wir alle Beacons gesammelt haben
+	if #FrenziedVampires == numFrenzied then
+		-- wir löschen alle Raidicons aus der Runde davor
+		for _,target in pairs(CurrentTargets) do
+			SetRaidTarget(target,0)
+		end
+		-- löschen die Tabelle
+		CurrentTargets = wipe(CurrentTargets)
+		-- und füllen Sie neu
+		for name,targets in pairs(NextTargets) do
+			if #targets then
+				if targets[1] ~= nil then
+					CurrentTargets[name] = targets[1]
+				end
+				table.remove(NextTargets[k][1])
+			end
+		end
+		-- whispern die neuen Targets und setzen die Raidicons
+		local n = 0
+		for name,target in pairs(CurrentTargets) do
+			n = n + 1 -- Index
+			SetRaidTarget(target,n)
+			self:whisper(format("nächstes Ziel ist {rt%u}%s",n,target),name)
+		end
+	end
+end
+
+function BiteME:SomeoneDied()
+	for i,name in pairs(Vampires) do
+		if name == dstname then
+			table.remove(Vampires,i)
+			table.insert(DeadVampires,name)
+		end
+	end
 end
 
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat || RangedRechts muss neuen Namen bekommen
@@ -236,24 +319,23 @@ function BiteME:SendSetup()
 	self:channel("Aufstellung Blood Queen")
 	self:SendMelee()
 	self:SendRanged()
-	self:channel(format("Verteiler bei den Melees ist %q",BiteMe["Melee"]["Left"][1]))
-	self:channel(format("Verteiler bei den Ranged ist %q",BiteMe["Ranged"]["Left"][1]))
+	self:channel(format("Verteiler bei den Melees ist %q",tmp["Melee"]["Left"][1]))
+	self:channel(format("Verteiler bei den Ranged ist %q",tmp["Ranged"]["Left"][1]))
 end
 
 -- Funktion für den Button Send Melee Setup. 
 function BiteME:SendMelee()
 	self:channel("*** Melees ***")
-	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Left"][1],BiteMe["Melee"]["Left"][2],BiteMe["Melee"]["Left"][3],BiteMe["Melee"]["Left"][4],BiteMe["Melee"]["Left"][5]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Right"][1],BiteMe["Melee"]["Right"][2],BiteMe["Melee"]["Right"][3],BiteMe["Melee"]["Right"][4],BiteMe["Melee"]["Right"][5]))
+	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",tmp["Melee"]["Left"][1],tmp["Melee"]["Left"][2],tmp["Melee"]["Left"][3],tmp["Melee"]["Left"][4],tmp["Melee"]["Left"][5]))
+	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",tmp["Melee"]["Right"][1],tmp["Melee"]["Right"][2],tmp["Melee"]["Right"][3],tmp["Melee"]["Right"][4],tmp["Melee"]["Right"][5]))
 end
 
 -- Funktion für den Button Send Ranged Setup.
 function BiteME:SendRanged()
 	self:channel("*** Ranged ***")
-	self:channel(format("Linke Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",BiteMe["Ranged"]["Left"][1],BiteMe["Ranged"]["Left"][2],BiteMe["Ranged"]["Left"][3],BiteMe["Ranged"]["Left"][4]))
-	self:channel(format("Rechte Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",BiteMe["Ranged"]["Right"][1],BiteMe["Ranged"]["Right"][2],BiteMe["Ranged"]["Right"][3],BiteMe["Ranged"]["Right"][4]))
+	self:channel(format("Linke Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",tmp["Ranged"]["Left"][1],tmp["Ranged"]["Left"][2],tmp["Ranged"]["Left"][3],tmp["Ranged"]["Left"][4]))
+	self:channel(format("Rechte Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",tmp["Ranged"]["Right"][1],tmp["Ranged"]["Right"][2],tmp["Ranged"]["Right"][3],tmp["Ranged"]["Right"][4]))
 end
-
 
 -- GUI Helper Funktionen
 -- Frame toggle
