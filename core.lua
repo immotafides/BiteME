@@ -33,6 +33,8 @@ BiteMe["Ranged"]["Right"] = {
 local Prefix = "BiteME: " -- Pröfix für z.B. die Whispers
 local reordered = false
 
+local BiteTargets = {}
+
 -- alle unsere Combatlog Daten
 local timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs, spellID, spellName
 
@@ -47,7 +49,7 @@ BiteME:SetScript("OnEvent",
 			if type == "SPELL_AURA_APPLIED" or type == "SPELL_AURA_APPLIED_DOSE" then
 				spellID, spellName = select(9, ...)				
 				if spellID == 71473 then  -- Essence of the Blood Queen
-					if not reordered then self:BiteOrder() end
+					if not reordered then self:BiteReorder() end					
 					self:Announce()
 				end
 			end
@@ -75,9 +77,8 @@ function BiteME:Initialize()
 	self:CheckZone()
 end
 
--- Interpreter der Slashbefehle, hier 0 = reload ui
-function BiteME:SlashCommandHandler(arg)
-	if arg == "0" then ReloadUI() end	
+-- Handler der Slashbefehle
+function BiteME:SlashCommandHandler(arg)	
  	self:Toggle(arg);
 end
 
@@ -94,7 +95,8 @@ function BiteME:CheckZone()
 	end	
 end
 
-function BiteME:BiteOrder()		
+function BiteME:BiteReorder()
+	reordered = true
 	-- Ist der erste gebissene kein Verteiler? Dann verändern wir die Reihenfolgen
 	if  dstName ~= BiteMe["Melee"]["Left"][1] or dstName ~= BiteMe["Melee"]["Right"][1] or dstName ~= BiteMe["Ranged"]["Left"][1] or dstName ~= BiteMe["Ranged"]["Right"][1] then
 		self:message(format("%s ist kein Verteiler, suche nach anderen", dstName))
@@ -102,81 +104,177 @@ function BiteME:BiteOrder()
 		for k,v in pairs(BiteMe["Melee"]["Left"]) do
 			if v == dstName then					
 				table.remove(BiteMe["Melee"]["Left"], k)
-				table.insert(BiteMe["Melee"]["Left"], 1 , v)
+				table.insert(BiteMe["Melee"]["Left"], 1 , v)				
 			end
 		end
 		-- Melees rechts
 		for k,v in pairs(BiteMe["Melee"]["Right"]) do
 			if v == dstName then					
 				table.remove(BiteMe["Melee"]["Right"],k)
-				table.insert(BiteMe["Melee"]["Right"],1,v)
+				table.insert(BiteMe["Melee"]["Right"],1,v)				
 			end
 		end
 		-- Ranged links
 		for k,v in pairs(BiteMe["Ranged"]["Left"]) do
 			if v == dstName then
 				BiteMe["Ranged"]["Left"][k] = BiteMe["Ranged"]["Left"][1]
-				BiteMe["Ranged"]["Left"][1] = dstName
+				BiteMe["Ranged"]["Left"][1] = dstName				
 			end
 		end
 		-- Ranged rechts
 		for k,v in pairs(BiteMe["Ranged"]["Right"]) do
 			if v == dstName then
 				BiteMe["Ranged"]["Right"][k] = BiteMe["Ranged"]["Right"][1]
-				BiteMe["Ranged"]["Right"][1] = dstName
+				BiteMe["Ranged"]["Right"][1] = dstName				
 			end
 		end
 	end
-	reordered = true
+	self:SetBiteTargets()
 end
 
--- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat
-function BiteME:OnClick()
-	self:channel("Aufstellung Melees Blood Queen")
-	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Left"][1],BiteMe["Melee"]["Left"][2],BiteMe["Melee"]["Left"][3],BiteMe["Melee"]["Left"][4],BiteMe["Melee"]["Left"][5]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Right"][1],BiteMe["Melee"]["Right"][2],BiteMe["Melee"]["Right"][3],BiteMe["Melee"]["Right"][4],BiteMe["Melee"]["Right"][5]))
-	self:channel(format("Verteiler bei den Mes ist %s",BiteMe["Melee"]["Left"][1]))
-	self:channel(format("Verteiler bei den Ranged ist %s",BiteMe["Ranged"]["left"][1]))
-end
-
--- Funktion für GetTargetWithID soll später mal alle 18 OnClick Funktionen abdecken. Fehlt: String to Object. Solange arbeiten wir mit 18 mal der selben Funktion. Sieh Unten.
-function BiteME:GetTargetWithID(...)
-   	id = this:GetID()
-	local frame = "BiteMe_InputBox" .. id
-	--local frame2 = getGlobal("BiteMe_InputBox" .. id)
-	--local frame3 = getObject(frame)
-	--local frame4 = BiteMe:getObject(frame)
-	--local frame5 = BiteMe:GetNamedObject(frame)
-	--frame:Insert(UnitName("target"))
-	SendChatMessage(frame, "WHISPER", nil, "Zipzap")
-
+-- Funktion für die wirkliche Bissreihenfolge
+function BiteME:SetBiteTargets()
+	-- Linker Melee Verteiler zuerst gebissen
+	if dstName == BiteMe["Melee"]["Left"][1] then
+		-- Ziele setzen
+		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
+			BiteMe["Ranged"]["Left"][1],
+			BiteMe["Melee"]["Right"][1]
+		}
+		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
+			nil,
+			nil
+		}
+	-- Rechter Melee Verteiler zuerst gebissen
+	elseif dstName == BiteMe["Melee"]["Right"][1] then
+		-- Ziele setzen
+		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
+			nil,
+			nil
+		}
+		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
+			BiteMe["Ranged"]["Left"][1],
+			BiteMe["Melee"]["Left"][1]
+		}
+	-- Ein Ranged hat den ersten Biss bekommen
+	else
+		BiteTargets[BiteMe["Melee"]["Left"][1]] = {
+			nil,
+			nil
+		}
+		BiteTargets[BiteMe["Melee"]["Right"][1]] = {
+			nil,
+			nil
+		}
+	end
+	-- die letzten beiden Bisse noch
+	table.insert(BiteTargets[BiteMe["Melee"]["Left"][1]],3,BiteMe["Melee"]["Left"][2])
+	table.insert(BiteTargets[BiteMe["Melee"]["Left"][1]],4,BiteMe["Melee"]["Left"][4])
+	table.insert(BiteTargets[BiteMe["Melee"]["Right"][1]],3,BiteMe["Melee"]["Right"][2])
+	table.insert(BiteTargets[BiteMe["Melee"]["Right"][1]],4,BiteMe["Melee"]["Right"][4])
+	
+	-- das Ganze nochmal für die Ranged Verteiler	
+	-- Linker Ranged Verteiler zuerst gebissen
+	if dstName == BiteMe["Ranged"]["Left"][1] then
+		-- Ziele setzen
+		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
+			BiteMe["Melee"]["Left"][1],
+			BiteMe["Ranged"]["Right"][1]
+		}
+		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
+			nil,
+			nil
+		}
+	-- Rechter Ranged Verteiler zuerst gebissen
+	elseif dstName == BiteMe["Ranged"]["Right"][1] then
+		-- Ziele setzen
+		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
+			nil,
+			nil
+		}
+		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
+			BiteMe["Melee"]["Left"][1],
+			BiteMe["Ranged"]["Left"][1]
+		}
+	-- Ein Ranged hat den ersten Biss bekommen
+	else
+		BiteTargets[BiteMe["Ranged"]["Left"][1]] = {
+			nil,
+			nil
+		}
+		BiteTargets[BiteMe["Ranged"]["Right"][1]] = {
+			nil,
+			nil
+		}
+	end
+	-- die letzten beiden Bisse noch
+	table.insert(BiteTargets[BiteMe["Ranged"]["Left"][1]],3,BiteMe["Ranged"]["Left"][3])
+	table.insert(BiteTargets[BiteMe["Ranged"]["Left"][1]],4,BiteMe["Ranged"]["Left"][2])
+	table.insert(BiteTargets[BiteMe["Ranged"]["Right"][1]],3,BiteMe["Ranged"]["Right"][3])
+	table.insert(BiteTargets[BiteMe["Ranged"]["Right"][1]],4,BiteMe["Ranged"]["Right"][2])
+	
+	-- und die restlichen  Bisse
+	BiteTargets[BiteMe["Melee"]["Left"][2]] =  {nil, nil, nil, BiteMe["Melee"]["Left"][1] }
+	BiteTargets[BiteMe["Melee"]["Left"][3]] =  {nil, nil, nil, nil}
+	BiteTargets[BiteMe["Melee"]["Left"][4]] =  {nil, nil, nil, nil}
+	
+	BiteTargets[BiteMe["Melee"]["Right"][2]] = {nil, nil, nil, BiteMe["Melee"]["Right"][1] }
+	BiteTargets[BiteMe["Melee"]["Right"][3]] = {nil, nil, nil, nil}
+	BiteTargets[BiteMe["Melee"]["Right"][4]] = {nil, nil, nil, nil}
+	
+	BiteTargets[BiteMe["Ranged"]["Left"][2]] =  {nil, nil, nil, nil}
+	BiteTargets[BiteMe["Ranged"]["Left"][3]] =  {nil, nil, nil, BiteMe["Ranged"]["Left"][4]}
+	BiteTargets[BiteMe["Ranged"]["Left"][4]] =  {nil, nil, nil, nil}
+	
+	BiteTargets[BiteMe["Ranged"]["Right"][2]] = {nil, nil, nil, nil}
+	BiteTargets[BiteMe["Ranged"]["Right"][3]] = {nil, nil, nil, BiteMe["Ranged"]["Right"][4]}
+	BiteTargets[BiteMe["Ranged"]["Right"][4]] = {nil, nil, nil, nil}
 end
 
 -- Funktion für den Button Send Setup. Sendet die Aufstellung an den Raidchat || RangedRechts muss neuen Namen bekommen
 function BiteME:SendSetup()
 	self:channel("Aufstellung Blood Queen")
-	self:channel("Melees:")
-	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Left"][1],BiteMe["Melee"]["Left"][2],BiteMe["Melee"]["Left"][3],BiteMe["Melee"]["Left"][4],BiteMe["Melee"]["Left"][5]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Right"][1],BiteMe["Melee"]["Right"][2],BiteMe["Melee"]["Right"][3],BiteMe["Melee"]["Right"][4],BiteMe["Melee"]["Right"][5]))
-	self:channel("Ranged:")
-	self:channel(format("Linke Seite: %s, %s, %s, %s",BiteMe["Ranged"]["Left"][1],BiteMe["Ranged"]["Left"][2],BiteMe["Ranged"]["Left"][3],BiteMe["Ranged"]["Left"][4]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s",BiteMe["Ranged"]["Right"][1],BiteMe["Ranged"]["Right"][2],BiteMe["Ranged"]["Right"][3],BiteMe["Ranged"]["Right"][4]))
-	self:channel(format("Verteiler bei den Melees ist %s",BiteMe["Melee"]["Left"][1]))
-	self:channel(format("Verteiler bei den Ranged ist %s",BiteMe["Ranged"]["Left"][1]))
+	self:SendMelee()
+	self:SendRanged()
+	self:channel(format("Verteiler bei den Melees ist %q",BiteMe["Melee"]["Left"][1]))
+	self:channel(format("Verteiler bei den Ranged ist %q",BiteMe["Ranged"]["Left"][1]))
 end
 
 -- Funktion für den Button Send Melee Setup. 
 function BiteME:SendMelee()
-	self:channel("Melees:")
+	self:channel("*** Melees ***")
 	self:channel(format("Linke Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Left"][1],BiteMe["Melee"]["Left"][2],BiteMe["Melee"]["Left"][3],BiteMe["Melee"]["Left"][4],BiteMe["Melee"]["Left"][5]))
 	self:channel(format("Rechte Seite: %s, %s, %s, %s, %s",BiteMe["Melee"]["Right"][1],BiteMe["Melee"]["Right"][2],BiteMe["Melee"]["Right"][3],BiteMe["Melee"]["Right"][4],BiteMe["Melee"]["Right"][5]))
 end
 
 -- Funktion für den Button Send Ranged Setup.
 function BiteME:SendRanged()
-	self:channel("Ranged:")
-	self:channel(format("Linke Seite: %s, %s, %s, %s",BiteMe["Ranged"]["Left"][1],BiteMe["Ranged"]["Left"][2],BiteMe["Ranged"]["Left"][3],BiteMe["Ranged"]["Left"][4]))
-	self:channel(format("Rechte Seite: %s, %s, %s, %s",BiteMe["Ranged"]["Right"][1],BiteMe["Ranged"]["Right"][2],BiteMe["Ranged"]["Right"][3],BiteMe["Ranged"]["Right"][4]))
+	self:channel("*** Ranged ***")
+	self:channel(format("Linke Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",BiteMe["Ranged"]["Left"][1],BiteMe["Ranged"]["Left"][2],BiteMe["Ranged"]["Left"][3],BiteMe["Ranged"]["Left"][4]))
+	self:channel(format("Rechte Seite: %s (Verteiler), %s (oben), %s (mitte), %s (unten)",BiteMe["Ranged"]["Right"][1],BiteMe["Ranged"]["Right"][2],BiteMe["Ranged"]["Right"][3],BiteMe["Ranged"]["Right"][4]))
+end
+
+
+-- GUI Helper Funktionen
+-- Frame toggle
+function BiteME:Toggle()
+	local frame = getglobal("BiteMe")
+	if frame then
+		if frame:IsVisible() then
+			frame:Hide()
+		else
+			frame:Show()
+		end
+	end
+end
+
+-- Funktion für GetTargetWithID
+function BiteME:GetTargetWithID(...)
+	if UnitName("target") then
+		local editbox = getglobal("BiteMe_InputBox"..this:GetID())
+		editbox:SetText(UnitName("target"))
+		editbox:SetFocus()
+	end
 end
 
 -- Funktion für den Button SendData. Setter Funktionen für die BiteMe Tabelle
@@ -241,18 +339,6 @@ function BiteME:SendData()
 	end
 end
 
--- Interpreter der Slashbefehle2.
-function BiteME:Toggle()
-	local frame = getglobal("BiteMe")
-	if frame then
-		if frame:IsVisible() then
-			frame:Hide()
-		else
-			frame:Show()
-		end
-	end
-end
-
 --  HELPER  ZEUGS
 function BiteME:whisper(msg, name)
    if not (msg and name) then return end   
@@ -283,130 +369,3 @@ function filterOutgoing(self, event, ...)
 end
 -- Filter muss noch registriert werden
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filterOutgoing)
-
--- Bis GetTargetWithId Funktioniert, muss der Code hier herhalten.
--- Funktion für den Button GetTarget4L1
-function BiteME:GetTarget4L1(...)
-	if UnitName("target") then
-		BiteMe_InputBox1:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4L2
-function BiteME:GetTarget4L2(...)
-	if UnitName("target") then
-		BiteMe_InputBox2:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4L3
-function BiteME:GetTarget4L3(...)
-	if UnitName("target") then
-		BiteMe_InputBox3:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4L4
-function BiteME:GetTarget4L4(...)
-	if UnitName("target") then
-		BiteMe_InputBox4:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4L5
-function BiteME:GetTarget4L5(...)
-	if UnitName("target") then
-		BiteMe_InputBox5:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4R1
-function BiteME:GetTarget4R1(...)
-	if UnitName("target") then
-		BiteMe_InputBox6:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4R2
-function BiteME:GetTarget4R2(...)
-	if UnitName("target") then
-		BiteMe_InputBox7:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4R3
-function BiteME:GetTarget4R3(...)
-	if UnitName("target") then
-		BiteMe_InputBox8:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4R4
-function BiteME:GetTarget4R4(...)
-	if UnitName("target") then
-		BiteMe_InputBox9:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4R5
-function BiteME:GetTarget4R5(...)
-	if UnitName("target") then
-		BiteMe_InputBox10:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RL1
-function BiteME:GetTarget4RL1(...)
-	if UnitName("target") then
-		BiteMe_InputBox11:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RL2
-function BiteME:GetTarget4RL2(...)
-	if UnitName("target") then
-		BiteMe_InputBox12:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RL3
-function BiteME:GetTarget4RL3(...)
-	if UnitName("target") then
-		BiteMe_InputBox13:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RL4
-function BiteME:GetTarget4RL4(...)
-	if UnitName("target") then
-		BiteMe_InputBox14:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RR1
-function BiteME:GetTarget4RR1(...)
-	if UnitName("target") then
-		BiteMe_InputBox15:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RR2
-function BiteME:GetTarget4RR2(...)
-	if UnitName("target") then
-		BiteMe_InputBox16:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RR3
-function BiteME:GetTarget4RR3(...)
-	if UnitName("target") then
-		BiteMe_InputBox17:Insert(UnitName("target"))
-	end
-end
-
--- Funktion für den Button GetTarget4RR4
-function BiteME:GetTarget4RR4(...)
-	if UnitName("target") then
-		BiteMe_InputBox18:Insert(UnitName("target"))
-	end
-end

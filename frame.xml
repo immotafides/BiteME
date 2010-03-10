@@ -338,7 +338,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4L1(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4L2 -->
@@ -354,7 +354,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4L2(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4L3 -->
@@ -370,7 +370,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4L3(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4L4 -->
@@ -386,7 +386,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4L4(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4L5 -->
@@ -402,7 +402,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4L5(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Gettarget Buttons Melees Rechts -->			
@@ -419,7 +419,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4R1(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4R2 -->
@@ -435,7 +435,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4R2(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4R3 -->
@@ -451,7 +451,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4R3(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4R4 -->
@@ -467,7 +467,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4R4(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4R5 -->
@@ -483,7 +483,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4R5(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Gettarget Buttons Ranged Links -->			
@@ -500,7 +500,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RL1(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RL2 -->
@@ -516,7 +516,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RL2(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RL3 -->
@@ -532,7 +532,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RL3(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RL4 -->
@@ -548,7 +548,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RL4(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Gettarget Buttons Ranged Rechts -->			
@@ -565,7 +565,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RR1(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RR2 -->
@@ -581,7 +581,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RR2(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RR3 -->
@@ -597,7 +597,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RR3(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>
 			<!-- Button: GetTarget4RR4 -->
@@ -613,7 +613,7 @@
 					</anchor>
 				</anchors> 
 				<scripts>
-					<onclick>BiteME:GetTarget4RR4(arg1)</onclick>
+					<onclick>BiteME:GetTargetWithID(arg1)</onclick>
 				</scripts>
 			</button>			
 		</frames>
