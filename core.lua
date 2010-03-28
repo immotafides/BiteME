@@ -35,17 +35,17 @@ local reordered = false
 
 -- funktionale Listen
 local tmp = BiteMe
-local Vamires = {}
+local Vampires = {}
 local DeadVampires = {}
 local NextTargets = {}
 local CurrentTargets = {}
 
 -- Kram zum tracken der Runden
-local FrenziedPlayers = {} -- Tabelle in der die Spieler reingeschrieben werden
+local FrenziedVampires = {} -- Tabelle in der die Spieler reingeschrieben werden
 local lastFrenziedTimestamp = time() -- Zeitstempel zum resetten der Liste
 local frenzied_delta = 20 -- Sekunden die zwischen den Frenzied Debuff maximal liegen dürfen
-local round = 0
-local numFrenzied = 2 ^ round -- Anzahl der aktuell zu erwartenden  Bisse
+local round = 1
+local numFrenzied = 1 -- Anzahl der aktuell zu erwartenden  Bisse
 
 -- alle unsere Combatlog Daten
 local timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs, spellID, spellName
@@ -58,18 +58,21 @@ BiteME:SetScript("OnEvent",
 		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 			timestamp, type, srcGUID, srcName, srcFlgs, dstGUID, dstName, dstFlgs = select(1, ...)
 			--  AUREN    
-			if type == "SELL_AURA_REMOVED" then
-				spellID, spellName = select(9, ...)				
-				if spellID == 70877 and not reordered then -- Frenzied Bloodthirsts
+			if type == "SPELL_AURA_REMOVED" then
+				spellID, spellName = select(9, ...)
+				if spellID == 70877 or spellName=="Unending Breath" then -- Frenzied Bloodthirsts
+					self:channel("SPELL_AURA_REMOVED")
 					self:AnnounceNextTargets()
 				end
 			elseif type == "SPELL_AURA_APPLIED" or type == "SPELL_AURA_APPLIED_DOSE" then
-				spellID, spellName = select(9, ...)				
-				if spellID == 71473 then
+				spellID, spellName = select(9, ...)
+				if spellID == 71473 or spellName=="Detect Invisibility" then
 					if not reordered then -- Essence of the Blood Queen
+						self:channel("reordered")
 						self:BiteReorder()
 						self:SetNextTargets()
 						self:AnnounceNextTargets()
+						self:channel("SPELL_AURA_APPLIED")
 					end
 					table.insert(Vampires, dstName)
 				elseif spellID == 70923 then -- Uncontrollable Frenzy
@@ -94,18 +97,18 @@ function BiteME:Initialize()
 	-- Slashcommands einbinden
 	SLASH_BITEME1 = "/biteme"
 	SLASH_BITEME2 = "/bm"
-	SlashCmdList["BITEME"] = function(msg) self:SlashCommandHandler(msg) end	
+	SlashCmdList["BITEME"] = function(msg) self:SlashCommandHandler(msg) end
 	self:message("loaded. Type in /biteme for more Options.")
 	-- Zonen tracken
 	self:RegisterEvent("ZONE_CHANGED")
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")	
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:CheckZone()
 end
 
 -- Handler der Slashbefehle
 function BiteME:SlashCommandHandler(arg)
- 	self:Toggle(arg);
+ 	self:Toggle(arg)
 end
 
 local subzone = GetSubZoneText()
@@ -114,9 +117,9 @@ function BiteME:CheckZone()
 	subzone    = GetSubZoneText()
 	difficulty = GetInstanceDifficulty()
 	if subzone == "EN" or subzone == "DE"  then
-		self:message("Looking for |TInterface\\Icons\\ability_warlock_improvedsoulch:16|tEssence of the Blood Queen!")
+		self:message("Looking for |TInterface\\Icons\\ability_warlock_improvedsoulleech:16|tVampires!")
 		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	else			
+	else
 		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end	
 end
@@ -124,9 +127,13 @@ end
 -- Funktion zum Resetten der Listen
 function BiteME:Reset()
 	-- niemand wird gebissen
-	BittenPlayers = wipe(BittenPlayers)
+	Vampires = wipe(Vampires)
+	DeadVampires = wipe(DeadVampires)
+	FrenziedVampires = wipe(FrenziedVampires)
+	tmp = BiteMe
 	-- Liste wurde noch nicht sortiert
-	reordered = false	
+	reordered = false
+	round = 0
 end
 
 function BiteME:BiteReorder()
@@ -135,34 +142,33 @@ function BiteME:BiteReorder()
 	-- Flag setzen
 	reordered = true
 	-- Ist der erste gebissene kein Verteiler? Dann verändern wir die Reihenfolgen
-	if  dstName ~= tmp["Melee"]["Left"][1] or dstName ~= tmp["Melee"]["Right"][1] or dstName ~= tmp["Ranged"]["Left"][1] or dstName ~= tmp["Ranged"]["Right"][1] then
-		self:message(format("%s ist kein Verteiler, suche nach anderen", dstName))
+	if  dstName ~= tmp["Melee"]["Left"][1] or dstName ~= tmp["Melee"]["Right"][1] or dstName ~= tmp["Ranged"]["Left"][1] or dstName ~= tmp["Ranged"]["Right"][1] then		
 		-- Melees links
 		for k,v in pairs(tmp["Melee"]["Left"]) do
-			if v == dstName then					
+			if v == dstName then
 				table.remove(tmp["Melee"]["Left"], k)
-				table.insert(tmp["Melee"]["Left"], 1 , v)				
+				table.insert(tmp["Melee"]["Left"], 1 , v)
 			end
 		end
 		-- Melees rechts
 		for k,v in pairs(tmp["Melee"]["Right"]) do
-			if v == dstName then					
+			if v == dstName then
 				table.remove(tmp["Melee"]["Right"],k)
-				table.insert(tmp["Melee"]["Right"],1,v)				
+				table.insert(tmp["Melee"]["Right"],1,v)
 			end
 		end
 		-- Ranged links
 		for k,v in pairs(tmp["Ranged"]["Left"]) do
 			if v == dstName then
 				tmp["Ranged"]["Left"][k] = tmp["Ranged"]["Left"][1]
-				tmp["Ranged"]["Left"][1] = dstName				
+				tmp["Ranged"]["Left"][1] = dstName
 			end
 		end
 		-- Ranged rechts
 		for k,v in pairs(tmp["Ranged"]["Right"]) do
 			if v == dstName then
 				tmp["Ranged"]["Right"][k] = tmp["Ranged"]["Right"][1]
-				tmp["Ranged"]["Right"][1] = dstName				
+				tmp["Ranged"]["Right"][1] = dstName
 			end
 		end
 	end	
@@ -236,7 +242,7 @@ function BiteME:SetNextTargets()
 	else
 		NextTargets[tmp["Ranged"]["Left"][1]] = {
 			nil,
-			nil
+			tmp["Ranged"]["Right"][1]
 		}
 		NextTargets[tmp["Ranged"]["Right"][1]] = {
 			nil,
@@ -250,17 +256,17 @@ function BiteME:SetNextTargets()
 	table.insert(NextTargets[tmp["Ranged"]["Right"][1]],4,tmp["Ranged"]["Right"][2])
 	
 	-- und die restlichen  Bisse
-	NextTargets[tmp["Melee"]["Left"][2]] =  {nil, nil, nil, tmp["Melee"]["Left"][1]}
-	NextTargets[tmp["Melee"]["Left"][3]] =  {nil, nil, nil, nil}
-	NextTargets[tmp["Melee"]["Left"][4]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Left"][2]] = {nil, nil, nil, tmp["Melee"]["Left"][1]}
+	NextTargets[tmp["Melee"]["Left"][3]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Melee"]["Left"][4]] = {nil, nil, nil, nil}
 	
 	NextTargets[tmp["Melee"]["Right"][2]] = {nil, nil, nil, tmp["Melee"]["Right"][1]}
 	NextTargets[tmp["Melee"]["Right"][3]] = {nil, nil, nil, nil}
 	NextTargets[tmp["Melee"]["Right"][4]] = {nil, nil, nil, nil}
 	
-	NextTargets[tmp["Ranged"]["Left"][2]] =  {nil, nil, nil, nil}
-	NextTargets[tmp["Ranged"]["Left"][3]] =  {nil, nil, nil, tmp["Ranged"]["Left"][4]}
-	NextTargets[tmp["Ranged"]["Left"][4]] =  {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Left"][2]] = {nil, nil, nil, nil}
+	NextTargets[tmp["Ranged"]["Left"][3]] = {nil, nil, nil, tmp["Ranged"]["Left"][4]}
+	NextTargets[tmp["Ranged"]["Left"][4]] = {nil, nil, nil, nil}
 	
 	NextTargets[tmp["Ranged"]["Right"][2]] = {nil, nil, nil, nil}
 	NextTargets[tmp["Ranged"]["Right"][3]] = {nil, nil, nil, tmp["Ranged"]["Right"][4]}
@@ -268,17 +274,18 @@ function BiteME:SetNextTargets()
 end
 
 function BiteME:AnnounceNextTargets()
-	-- Reset der Beacons
-	if #FrenziedVampires > numFrenzied - #DeadVampires or difftime(time(),lastFrenziedTimestamp) > frenzied_delta then
-		FrenziedVampires = wipe(FrenziedVampires)
+	-- Reset der Runden
+	local numRealFrenzied = numFrenzied - #DeadVampires
+	if #FrenziedVampires >= numRealFrenzied then
+		self:message("Neue Runde")
 		round = round + 1
-		numFrenzied = 2 ^ round
+		numFrenzied = 2 ^ (round - 1)
 	end	
 	-- Zeit setzen
 	lastFrenziedTimestamp = time()
-	-- Die Tabelle der Reihenfolge mit Namen der Spieler befüllen		
+	-- Die Tabelle der Reihenfolge mit Namen der Spieler befüllen
 	table.insert(FrenziedVampires, dstName)
-	-- sobald wir alle Beacons gesammelt haben
+	-- sobald wir alle Beacons gesammelt haben	
 	if #FrenziedVampires == numFrenzied then
 		-- wir löschen alle Raidicons aus der Runde davor
 		for _,target in pairs(CurrentTargets) do
@@ -289,10 +296,9 @@ function BiteME:AnnounceNextTargets()
 		-- und füllen Sie neu
 		for name,targets in pairs(NextTargets) do
 			if #targets then
-				if targets[1] ~= nil then
-					CurrentTargets[name] = targets[1]
+				if targets[round] then
+					CurrentTargets[name] = targets[round]
 				end
-				table.remove(NextTargets[k][1])
 			end
 		end
 		-- whispern die neuen Targets und setzen die Raidicons
@@ -362,7 +368,7 @@ end
 -- Funktion für den Button SendData. Setter Funktionen für die BiteMe Tabelle
 function BiteME:SendData()
 	-- Melee Linke Seite  
-   	if BiteMe_InputBox1:GetText() then    		
+   	if BiteMe_InputBox1:GetText() then
 		BiteMe["Melee"]["Left"][1] = BiteMe_InputBox1:GetText()
 	end
 	if BiteMe_InputBox2:GetText() then
@@ -372,7 +378,7 @@ function BiteME:SendData()
 		BiteMe["Melee"]["Left"][3] = BiteMe_InputBox3:GetText()
 	end
 	if BiteMe_InputBox4:GetText() then
-		BiteMe["Melee"]["Left"][4] = BiteMe_InputBox4:GetText()		
+		BiteMe["Melee"]["Left"][4] = BiteMe_InputBox4:GetText()
 	end
 	if BiteMe_InputBox5:GetText() then
 		BiteMe["Melee"]["Left"][5] = BiteMe_InputBox5:GetText()
@@ -388,7 +394,7 @@ function BiteME:SendData()
 		BiteMe["Melee"]["Right"][3] = BiteMe_InputBox8:GetText()
 	end
 	if BiteMe_InputBox9:GetText() then
-		BiteMe["Melee"]["Right"][4] = BiteMe_InputBox9:GetText()		
+		BiteMe["Melee"]["Right"][4] = BiteMe_InputBox9:GetText()
 	end
 	if BiteMe_InputBox10:GetText() then
 		BiteMe["Melee"]["Right"][5] = BiteMe_InputBox10:GetText()
@@ -423,19 +429,19 @@ end
 
 --  HELPER  ZEUGS
 function BiteME:whisper(msg, name)
-   if not (msg and name) then return end   
+   if not (msg and name) then return end
    SendChatMessage(Prefix..msg, "WHISPER", nil, name)
 end
 
 function BiteME:channel(msg)
 	if msg then		
-		SendChatMessage(msg, "OFFICER", nil)
+		SendChatMessage(msg, "RAID", nil)
 	end	
 end
 
 local print,format = print,string.format
 function BiteME:message(msg)
-	if msg then		
+	if msg then
 		print(format("|cffff0033"..Prefix.."|r%s",msg))
 	end
 end
@@ -447,7 +453,7 @@ function filterOutgoing(self, event, ...)
 		return filterOutgoing(nil, nil, self, event)
 	end
 	-- wir gucken ob der anfang der msg gleich unserem Prefix ist
-	return msg:sub(1, Prefix:len()) == Prefix, ...	
+	return msg:sub(1, Prefix:len()) == Prefix, ...
 end
 -- Filter muss noch registriert werden
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filterOutgoing)
